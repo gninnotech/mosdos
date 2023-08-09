@@ -1,0 +1,153 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <label class="form-label">
+                <p class="fs-4">Smartphone/Tablet</p>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="col-form-label fw-semibold mt-2">Do you have smartphone or tablet?</label>
+                    <p class="text-danger" id="smartphonewarning"></p>
+                </div>
+                <div class="offset-md-10 col-md-1">
+                    <div class="form-check">
+                        <input class="form-check-input androidNo" id="androidNo" name="android" type="radio" required onchange="closeandroidform(this)">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-check">
+                        <input class="form-check-input androidYes" id="androidYes" name="android" type="radio" required onchange="openandroidform(this.parentNode.parentNode.parentNode.parentNode.parentNode)">
+                        <label class="form-check-label">Yes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 ms-2 mb-0 hidden androidQuestions" id="androidQuestions">
+            <div class="row text-center bg-secondary mb-2 pt-2 pb-2 text-white">
+                <div class="col-md-1 mb-0 pb-0">
+                    User
+                </div>
+                <div class="col-md-2 mb-0 pb-0">
+                    Device
+                </div>
+                <div class="col-md-2 mb-0 pb-0">
+                    Filter Details
+                </div>
+                <div class="col-md-2 mb-0 pb-0">
+                    Registered Email
+                </div>
+                <div class="col-md-2 mb-0 pb-0 pe-0 me-0">
+                    Kehilla Policy
+                </div>
+                <div class="col-md-3 mb-0 ps-0 fs-6">
+                    <div class="col-md-12 mb-0 pb-0 ps-0 fs-6">
+                        <span class="badge fw-normal mb-0 fs-6 pb-0 ps-0">Whatsapp with saferfone filter</span>
+                    </div>
+                    <div class="col-md-12 mt-0 pt-0 mb-0 ps-0">
+                        <span class="badge fw-medium mt-0 pt-0 text-warning">(Limitted groups and blocked status)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center mb-2 androidOrigin" id="androidOrigin">
+                <div class="col-md-1 mb-0">
+                    <select class="form-select form-select-sm text-center primaryUser" name="primaryUser[]">
+                        <option value="" class="hidden">Choose</option>
+                        <option value="Father">Father</option>
+                        <option value="Mother">Mother</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-0">
+                    <select class="form-select form-select-sm text-center deviceCategory" name="deviceCategory[]" onchange="smartphonealert(this)">
+                        <option value="" class="hidden">Select Device Type</option>
+                        <option value="Smartphone">Smartphone</option>
+                        <option value="Tablet">Tablet</option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-0">
+                    <select class="form-select form-select-sm text-center filterName" name="filterName[]" onchange="selectedFilterName(this)">
+                        <option class="hidden" value="" selected>Select Filter Name</option>
+                        <?php include '../../pages/form/filternameoptionsandroid.php'; ?>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-0 hidden attachedEmailContainer">
+                    <input class="form-control form-control-sm attachedEmail" name="attachedEmail[]" type="email" placeholder="Registered email">
+                </div>
+                <div class="col-md-2 mb-0 filterAdditionalInformationContainer hidden">
+                    <input class="form-control form-control-sm filterAdditionalInformation" name="filterAdditionalInformation[]" value="" type="text" placeholder="" >
+                </div>
+                <div class="col-md-2 mb-0 hidden filterPolicyContainer">
+                    <select class="form-select form-select-sm text-center filterPolicy" name="filterPolicy[]">
+                        <option class="hidden" selected value="">Select kehilla policy</option>
+                        <?php include '../../pages/form/policyoptionandroid.php'; ?>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-0 hidden whatsappSettingsContainer">
+                    <select class="form-select form-select-sm text-center whatsappSettings" name="whatsappSettings[]" onchange="whatsappFinal(this)">
+                        <option hidden selected value="">Whatsapp info</option>
+                        <option value="Filtered Whatsapp">Filtered Whatsapp</option>
+                        <option value="Unfiltered Whatsapp">Unfiltered Whatsapp</option>
+                        <option value="No whatsapp">No Whatsapp</option>
+                    </select>
+                </div>
+                <div class="col-md-1 mb-0 hidden androidRemoval">
+                    <button class="btn btn-danger btn-sm deleteAndroidElement" onclick="deleteAndroidElement(this)">Delete</button>
+                </div>
+                <div class="col-md-12 text-danger">
+                    <p>
+                        <span class="hidden smartnoti">דעת רבני וועד עזרינו בארץ ובגולה שאשה הצריכה להשתמש עם
+                            מכשיר לצורך פרנסה או רפואה, תשתמש בטאבלט ולא בסמארטפון</span>
+                            <span class="hidden whatsnoti">דעת רבני וועד עזרינו בארץ ובגולה שמי שצריך להשתמש בוואטסאפ לצורך פרנסה, ישתמש אך ורק
+                            בוואטסאפ מסונן</span></p>
+                </div>
+                <div class="accordion mt-1 appliurlm" id="appliurlm">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header headingOnem" id="headingOnem">
+                            <button class="accordion-button appsurlbm" id="appsurlbm" type="button" data-bs-toggle="collapse" data-bs-target="#appsurlm" aria-expanded="true" aria-controls="collapseOne">
+                                Enter all the application you require below
+                            </button>
+                        </h2>
+                        <div id="appsurlm" class="accordion-collapse collapse show appsurlm" aria-labelledby="headingOnem" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <button class="btn btn-secondary insertBtnm" type="button" id="insertBtnm" onclick="insertAppAndUrlm(this)" ontouchstart="insertAppAndUrlm(this)">Click to
+                                                enter</button>
+                                            <input type="text" id="inputValuem" class="form-control inputValuem" placeholder="Type the apps/category here . . .">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <textarea class="form-control mb-2 displaym" rows="3" name="appsAndUrlInformation[]" value="" placeholder="Application/Url list"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 hidden addingmoreandroid">
+                    <div class="col-md-12 ps-0">
+                        <hr>
+                        <div class="input-group input-group-sm mb-3">
+                            <span class="me-2">Do you have other Smartphone/Tablet? </span>
+                            <input type="radio" class="form-check-input otherAndroidYes me-1" id="otherAndroidYes" name="otherAndroid" onchange="cloneAndroidElement(this)">
+                            <label class="form-check-label ms-1 me-1">Yes</label>
+                            <input type="radio" class="form-check-input otherAndroidNone me-1 ms-1" id="otherAndroidNone" name="otherAndroid" onchange="myNoMoreAndroidClone(this)">
+                            <label class="form-check-label ms-1">None</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 hidden optionRetro text-start mt-2" id="optionRetro">
+                    <button type="button" class="btn btn-outline-warning btn-sm mb-2 RetroToOption" id="RetroToOption" onclick="myPreviousAndroidOption(this)" ontouchstart="myPreviousAndroidOption()">Back to adding
+                        Smartphone/Tablet</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid androidContainer" id="androidContainer">
+        </div>
+    </div>
+</div>
+<script src="../static/js/ishur_form_script_android.js"></script>

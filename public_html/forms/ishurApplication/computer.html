@@ -1,0 +1,161 @@
+<div class="col-md-12">
+    <div class="row">
+      <div class="col-md-12">
+        <label class="form-label">
+          <p class="fs-4">Home/Office computer or laptop</p>
+            </label>
+        </div>
+        <div class="col-md-12">
+            <label class="col-form-label fw-semibold mt-2">Do you have computer or laptop at home or office?</label>
+        </div>
+        <div class="offset-md-10 col-md-1">
+            <div class="form-check">
+                <input type="radio" class="form-check-input destopchck2" id="destopchck2" name="desktop" required onchange="closedesktopform(this)">
+                <label class="form-label">None</label>
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="destopchck1" name="desktop" required onchange="opendesktopform(this)">
+                <label class="form-check-label">Yes</label>
+            </div>
+        </div>
+        <div class="col-md-12 hidden desktopquestions" id="desktopquestions">
+            <div class="row">
+                <div class="col-md-12 text-start mb-0">
+                    <div class="row text-center bg-secondary mb-2 pt-2 pb-2 text-white">
+                        <div class="col-md-1 mb-0">
+                            User
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            Device
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            Filter Details
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            Registered Email
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            Kehilla Policy
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            Other info
+                        </div>
+                        <div class="col-md-1 mb-0">
+                            Delete
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-start mb-2 originalss" id="originalss">
+                    <div class="row">
+                        <div class="col-md-1 mb-0 ps-0 pe-0">
+                            <select class="form-select form-select-sm text-center deviceOwner" name="deviceOwner[]">
+                                <option value="" class="hidden">Choose</option>
+                                <option value="Father">Father</option>
+                                <option value="Mother">Mother</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-0">
+                            <select class="form-select form-select-sm text-center deviceType" name="deviceType[]" onchange="deviceTypeFunction(this)">
+                                <option value="" class="hidden">Select Type</option>
+                                <?php include '../../pages/form/homeandlaptop.php'; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-0 filtersettings hidden">
+                            <div class="row">
+                                <div class="col-md-6 mb-0 ps-0 pe-1">
+                                    <select class="form-select form-select-sm text-center filterName hidden" name="filterName[]" onchange="filterNameFunction(this)">
+                                        <option value="" class="hidden">Name</option>
+                                        <?php include '../../pages/form/filternameoptionsdesktops.php'; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-0 ps-1 pe-0">
+                                    <select class="form-select form-select-sm text-center filterType hidden" name="filterType[]">
+                                        <option value="" class="hidden">Type</option>
+                                        <?php include '../../pages/form/filtertypeoptions.php'; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mb-0 hidden filterEmailContainer">
+                            <input class="form-control form-control-sm filterEmail" name="filterEmail[]" type="email" placeholder="Registered email">
+                        </div>
+                        <div class="col-md-2 mb-0 filterPolicyContainer hidden">
+                            <select class="form-select form-select-sm text-center filterPolicy" name="filterPolicy[]" onchange="filterPolicyFunction(this)">
+                                <option class="hidden" selected value="">Select policy</option>
+                                <?php include '../../pages/form/policyoptiondesktop.php'; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-0 otherFilterContainer hidden">
+                        <input class="form-control form-control-sm otherFilter" name="otherFilter[]" value="" type="text" placeholder="" onchange="otherFilterFunction(this)">
+                        </div>
+                        <div class="col-md-1 mb-0 hidden deldev" id="deldev">
+                            <button class="btn btn-danger btn-sm deleteDesktopElement" onclick="deleteDesktopElement(this)">Delete</button>
+                        </div>
+                        <div class="accordion mt-1 mb-2 hidden applurl mt-2">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header headingOne" id="headingOne">
+                                    <button class="accordion-button appsurlb" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#appsurl" aria-expanded="true" aria-controls="collapseOne">
+                                        Enter all the websites that you require below
+                                    </button>
+                                </h2>
+                                <div id="appsurl" class="accordion-collapse collapse show appsurl" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="input-group">
+                                                    <button class="btn btn-secondary insertBtn" type="button" id="insertBtn"
+                                                        onclick="insertAppAndUrl(this)" ontouchstart="insertAppAndUrl(this)">Click
+                                                        to enter</button>
+                                                    <input type="text" class="form-control inputValue"
+                                                        placeholder="Type the websites/category here. . .">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <textarea class="form-control mb-2 display"  name="requestedAccess[]" rows="3"
+                                                    value="" placeholder="Application/Url list"></textarea>
+                                            </div>
+                                            <div class="col-md-12 mt-0">
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 hidden addingmoredesktop">
+                            <div class="col-md-12 ps-0">
+                                <hr>
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="me-2">Do you have other desktop/laptop? </span>
+                                    <input type="radio" class="form-check-input desktopclone1 me-1" id="desktopclone1" name="desktops" required onchange="cloneDesktopElement(this)">
+                                    <label class="form-check-label ms-1 me-1">Yes</label>
+                                    <input type="radio" class="form-check-input nomoredesktopclone2 me-1 ms-1"
+                                        id="nomoredesktopclone2" name="desktops" required onchange="myNoMoreCloneFunction(this)">
+                                    <label class="form-check-label ms-1">None</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 hidden addingagain" id="addingagain">
+                            <hr>
+                            <button type="button" class="btn btn-outline-warning btn-sm mb-2 backtopreviousoption"
+                                id="backtopreviousoption" onclick="myPreviousoptionFunction(this)"
+                                ontouchstart="myPreviousoptionFunction()">Back to adding desktop/laptop</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                <div class="row morepcdevcontainer" id="morepcdevcontainer">
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>

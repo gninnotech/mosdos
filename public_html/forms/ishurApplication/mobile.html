@@ -1,0 +1,201 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <label class="fs-4 form-label mt-2">Basic phone information</label>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Father Mobile Device</label>
+                    <select class="form-select hidden" name="mobileUser[]">
+                        <option value="Father">Father</option>
+                    </select>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <div class="input-group">
+                        <button class="btn btn-secondary" type="button">Phone Model</button>
+                        <select class="form-select text-center mobileDevice" name="mobileDevice[]" required onchange="myMobile(this)">
+                            <option selected="" class="hidden" value="">Phone Model</option>
+                            <?php include '../../pages/form/mobileoptions.php'; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-2 hidden TagContainer" id="id_FatherTagContainer">
+                    <div class="input-group">
+                        <input class="form-control btn btn-secondary w-50 Taglabel" type="text" id="id_FatherTaglabel">
+                        <select class="form-select text-center tagDetails" name="tagDetails[]">
+                            <option selected="" class="hidden" value="">Yes/No</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 text-danger smarphonecontaineralert">
+                </div>
+                <div class="col-md-12 mt-2 hidden StickerContainer" id="id_FatherStickerContainer">
+                    <div class="input-group">
+                        <input class="form-control btn btn-secondary w-50 Stickerlabel" type="text" id="id_FatherStickerlabel">
+                        <select class="form-select text-center stickerType" name="stickerType[]">
+                            <option selected="" class="hidden" value="">SELECT</option>
+                            <option class="TAG">TAG</option>
+                            <option class="Syog">Syog</option>
+                            <option class="kehillaStickerOption"></option>
+                            <option class="Other">Other</option>
+                            <option class="Yes">Yes</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-2 hidden ImeiContainer" id="id_FatherImeiContainer">
+                    <input class="form-control imeiNumber" type="text" name="imeiNumber[]" placeholder="Enter 16 digit IMEI. To get your mobile IMEI Dial *#06# on your keypad" pattern="[0-9]{15,16}">
+                </div>
+                <div class="col-md-12 mt-2 hidden TextContainer" id="id_FatherTextContainer">
+                    <div class="input-group">
+                        <button class="btn btn-secondary" type="button">Is it Text Capable?</button>
+                        <select class="form-select text-center textCapabilities" name="textCapabilities[]">
+                            <option selected="" class="hidden" value="">Yes/No</option>
+                            <option>With text capabilities</option>
+                            <option>Without text capabilities</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label">Mother Mobile Device</label>
+                    <select class="form-select hidden" name="mobileUser[]">
+                        <option value="Father">Mother</option>
+                    </select>
+                </div>
+                <div class="col-md-12 mt-2">
+                    <div class="input-group">
+                        <button class="btn btn-secondary" type="button">Phone Model</button>
+                        <select class="form-select text-center mobileDevice" name="mobileDevice[]" required onchange="myMobile(this)">
+                            <option selected="" class="hidden" value="">Phone Model</option>
+                            <?php include '../../pages/form/mobileoptions.php'; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-2 hidden TagContainer" id="id_FatherTagContainer">
+                    <div class="input-group">
+                        <input class="form-control btn btn-secondary w-50 Taglabel" type="text" id="id_FatherTaglabel">
+                        <select class="form-select text-center tagDetails" name="tagDetails[]">
+                            <option selected="" class="hidden" value="">Yes/No</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 text-danger smarphonecontaineralert">
+                </div>
+                <div class="col-md-12 mt-2 hidden StickerContainer" id="id_FatherStickerContainer">
+                    <div class="input-group">
+                        <input class="form-control btn btn-secondary w-50 Stickerlabel" type="text" id="id_FatherStickerlabel">
+                        <select class="form-select text-center stickerType" name="stickerType[]">
+                        <option selected="" class="hidden" value="">SELECT</option>
+                        <option class="TAG">TAG</option>
+                        <option class="Syog">Syog</option>
+                        <option class="kehillaStickerOption"></option>
+                        <option class="Other">Other</option>
+                        <option class="Yes">Yes</option>
+                        <option>None</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-2 hidden ImeiContainer" id="id_FatherImeiContainer">
+                    <input class="form-control imeiNumber" type="text" name="imeiNumber[]" placeholder="Enter 16 digit IMEI. To get your mobile IMEI Dial *#06# on your keypad" pattern="[0-9]{15,16}">
+                </div>
+                <div class="col-md-12 mt-2 hidden TextContainer" id="id_FatherTextContainer">
+                    <div class="input-group">
+                        <button class="btn btn-secondary" type="button">Is it Text Capable?</button>
+                        <select class="form-select text-center textCapabilities" name="textCapabilities[]">
+                            <option selected="" class="hidden" value="">Yes/No</option>
+                            <option>With text capabilities</option>
+                            <option>Without text capabilities</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <div class="col-md-12 mt-2">
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <button type="button" class="btn btn-outline-success btn-sm" id="addbrik">Click to add more basic phone</button>
+                </div>
+                <div id="morebrikcontainer" class="row morebrikcontainer">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+</div>
+<div class="col-md-6 mb-2 address-set hidden" id="cloneme">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <button class="btn btn-secondary" type="button">Owner</button>
+                <select class="form-select ownerclss" name="mobileUser[]">
+                    <option selected="" class="hidden" value="">Select Owner</option>
+                    <option value="Father">Father</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span id="spanbrikdel" class="input-group-text align-self-center bg-transparent border border-0 text-danger">
+                    <button class="btn btn-danger btn-sm remove-button">Delete</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <div class="input-group">
+                <button class="btn btn-secondary" type="button">Phone Model</button>
+                <select class="form-select text-center mobileDevice" name="mobileDevice[]" onchange="myMobile(this)">
+                    <option selected="" class="hidden" value="">Phone Model</option>
+                    <?php include '../../pages/form/mobileoptions.php'; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2 hidden TagContainer" id="id_FatherTagContainer">
+            <div class="input-group">
+                <input class="form-control btn btn-secondary w-50 Taglabel" type="text" id="id_FatherTaglabel">
+                <select class="form-select text-center tagDetails" name="tagDetails[]">
+                    <option selected="" class="hidden" value="">Yes/No</option>
+                    <option>Yes</option>
+                    <option>No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12 text-danger smarphonecontaineralert">
+        </div>
+        <div class="col-md-12 mt-2 hidden StickerContainer" id="id_FatherStickerContainer">
+            <div class="input-group">
+                <input class="form-control btn btn-secondary w-50 Stickerlabel" type="text" id="id_FatherStickerlabel">
+                <select class="form-select text-center stickerType" name="stickerType[]">
+                    <option selected="" class="hidden" value="">SELECT</option>
+                    <option class="TAG">TAG</option>
+                    <option class="Syog">Syog</option>
+                    <option class="kehillaStickerOption"></option>
+                    <option class="Other">Other</option>
+                    <option class="Yes">Yes</option>
+                    <option>None</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2 hidden ImeiContainer" id="id_FatherImeiContainer">
+            <input class="form-control imeiNumber" type="text" name="imeiNumber[]" placeholder="Enter 16 digit IMEI. To get your mobile IMEI Dial *#06# on your keypad" pattern="[0-9]{15,16}">
+        </div>
+        <div class="col-md-12 mt-2 hidden TextContainer" id="id_FatherTextContainer">
+            <div class="input-group">
+                <button class="btn btn-secondary" type="button">Is it Text Capable?</button>
+                <select class="form-select text-center textCapabilities" name="textCapabilities[]">
+                    <option selected="" class="hidden" value="">Yes/No</option>
+                    <option>With text capabilities</option>
+                    <option>Without text capabilities</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

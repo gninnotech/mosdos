@@ -1,0 +1,52 @@
+.hidden {
+display: none;
+}
+.show {
+    display: block;
+}
+.glyphicon { cursor: pointer; }
+input,select { width: 100%; }
+.container .row .col-lg {
+   padding: 0 !important;
+}
+
+.selection{
+  max-width: 80px;
+  width:100% !important;
+  
+ }
+ .dropdown-menu{
+  min-width: 5.5rem;
+  border-radius:0;
+}
+.dataTables_filter{
+  padding-right: 4rem;
+  white-space: nowrap;
+}
+.dataTables_length{
+  white-space: nowrap;
+}
+.select2-container .select2-selection--multiple{
+  min-height:15px;
+  font-size: 10px;
+}
+
+table.dataTable.row-border tbody td{
+  border-top: 0px none transparent;
+}
+.bg-light{
+  --bs-bg-opacity:0;
+}
+.select2-results__option{
+  width: fit-content !important;
+}
+.select2-container--default {
+  width: 100% !important;
+}
+.select2-results{
+  width: fit-content !important;
+}
+.select2-dropdown {
+  width: fit-content !important;
+}
+        

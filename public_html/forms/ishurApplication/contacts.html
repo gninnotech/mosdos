@@ -1,0 +1,253 @@
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
+            <label class="fs-4 form-label">Contacts</label>
+        </div>
+        <?php
+        if (isset($basic_information_form["registeredEmail"]) && !empty($basic_information_form["registeredEmail"])) { 
+        ?>
+        <div class="col-md-4">
+            <p>Registered Username :
+                <?= htmlspecialchars($basic_information_form["registeredEmail"]) ?>
+            </p>
+        </div>
+
+        <div class="col-md-4">
+
+            <?php
+                $emailAddress = str_replace('~', '<br>', $basic_information_form["userEmail"]);
+                echo $emailAddress; ?>
+            <br>
+            <button type="button" class="btn btn-outline-success btn-sm mt-3" id="addmoreemail">Click to add more email address</button>
+
+            <div id="moreemailcontainer" class="input-group has-validation">
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <?php
+                $contactNumber = str_replace('~', '<br>', $basic_information_form["userMobile"]);
+                echo $contactNumber; ?>
+            <br>
+
+            <button type="button" class="btn btn-outline-success btn-sm mt-3" id="addmoremobile">Click to add more mobile
+                number</button>
+
+            <div id="moremobilecontainer" class="input-group has-validation">
+            </div>
+
+
+        </div>
+
+        <div class="col-md-12 mb-2 hidden" id="addemailclone">
+            <div class="input-group">
+                <span class="input-group-text">@</span>
+                <input placeholder="Enter Email" id="emailAddress" name="emailAddress[]" type="email" class="form-control">
+                <span id="spanemaildel" class="input-group-text me-2 align-self-center bg-transparent border border-0 text-danger"></span>
+                <div class="invalid-feedback">
+                    Enter a valid Email address
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <hr>
+        </div>
+        <div class="col-md-12 mb-2 hidden" id="addmobileclone">
+            <div class="input-group">
+                <span class="input-group-text">+44</span>
+                <input placeholder="Use this format 123456789" id="contactNumber" name="mobileNumber[]" type="tel" class="form-control" pattern="[0-9]{10,}">
+                <span id="spanmobiledel" class="input-group-text me-2 align-self-center bg-transparent border border-0 text-danger"></span>
+                <div class="invalid-feedback">
+                    kindly follow the format 123456789
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr style="border: .5px solid #7d97a5">
+        </div>
+        <?php
+            }
+        ?>
+        <div class="col-md-6 mb-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-check-label">Does father have an email?</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="fregular" name="fatheremailaccess" required onchange="fatheraccess()">
+                        <label class="form-check-label">Yes - With regular access</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="frare" name="fatheremailaccess" required onchange="fatheraccess()">
+                        <label class="form-check-label">Yes - Rarely access</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="fnone" name="fatheremailaccess" required onchange="fathernone()">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+                <div class="col-md-12 hidden" id="fatheremailinfo">
+                    <div class="input-group  d-flex justify-content-end">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend2">@</span>
+                        <input placeholder="Father Email" id="id_father_emailAddress" name="name_father_emailAddress" type="email" class="form-control" onkeyup="mEmailAccount()">
+                        <div class="invalid-feedback">
+                            Enter a valid Email address
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-check-label">Does mother have an email?</label>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mregular" name="motheremailaccess" required onchange="motheraccess()">
+                        <label class="form-check-label">Yes - With regular access</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mrare" name="motheremailaccess" required onchange="motheraccess()">
+                        <label class="form-check-label">Yes - Rarely access</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check  d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mnone" name="motheremailaccess" required onchange="mothernone()">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+                <div class="col-md-12 hidden" id="motheremailinfo">
+                    <div class="input-group  d-flex justify-content-end">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend2">@</span>
+                        <input placeholder="Mother Email" id="id_mother_emailAddress" name="name_mother_emailAddress" type="email" class="form-control" onkeyup="mEmailAccount()">
+                        <div class="invalid-feedback">
+                            Enter a valid Email address
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 hidden" id="addemailclone">
+            <div class="input-group">
+                <span class="input-group-text">@</span>
+                <input placeholder="Enter Email" id="emailAddress" name="emailAddress[]" type="email" class="form-control">
+                <span id="spanemaildel" class="input-group-text me-2 align-self-center bg-transparent border border-0 text-danger"></span>
+                <div class="invalid-feedback">
+                    Enter a valid Email address
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <button type="button" class="btn btn-outline-success btn-sm" id="addmoreemail">
+                        Click to add more email address
+                    </button>
+                </div>
+                <div id="moreemailcontainer" class="input-group has-validation">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-check-label">Home phone</label>
+                </div>
+                <div class="col-md-12" id="homephonecontainer">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend1">+44</span>
+                        <input placeholder="Use this format 123456789" id="id_home_contactNumber" name="name_home_contactNumber" type="tel" class="form-control" id="hphone" pattern="[0-9]{10,}" required onkeyup="mEmailAccount()">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="homephoneyes" name="homephone" required checked onchange="homephoneadd()">
+                        <label class="form-check-label">Add home phone</label>
+                    </div>
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="homephoneno" name="homephone" required onchange="homephonenone()">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-check-label">Father Mobile</label>
+                </div>
+                <div class="col-md-12" id="fathermobcontainer">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend2">+44</span>
+                        <input placeholder="Use this format 123456789" id="id_father_contactNumber" name="name_father_contactNumber" type="tel" class="form-control" pattern="[0-9]{10,}" required onkeyup="mEmailAccount()">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" name="fathermobile" id="mpfyes" required checked onchange="fathermobileadd()">
+                        <label class="form-check-label">Add father mobile</label>
+                    </div>
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mpfno" name="fathermobile" required onchange="fathermobilenone()">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="form-check-label">Mother Mobile</label>
+                </div>
+                <div class="col-md-12" id="mothermobilecontainer">
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="validationTooltipUsernamePrepend44">+44</span>
+                        <input placeholder="Use this format 123456789" id="id_mother_contactNumber" name="name_mother_contactNumber" type="tel" class="form-control" pattern="[0-9]{10,}" required onkeyup="mEmailAccount()">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mpmyes" name="mothermobile" required checked onchange="mothermobileadd()">
+                        <label class="form-check-label">Add mother mobile</label>
+                    </div>
+                    <div class="form-check d-flex justify-content-end">
+                        <input type="radio" class="form-check-input me-1" id="mpmno" name="mothermobile" required onchange="mothermobilenone()">
+                        <label class="form-check-label">None</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-2 hidden" id="addmobileclone">
+            <div class="input-group">
+                <span class="input-group-text">+44</span>
+                <input placeholder="Use this format 123456789" id="contactNumber" name="mobileNumber[]" type="tel" class="form-control" pattern="[0-9]{10,}">
+                <span id="spanmobiledel" class="input-group-text me-2 align-self-center bg-transparent border border-0 text-danger"></span>
+                <div class="invalid-feedback">
+                    kindly follow the format 123456789
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <button type="button" class="btn btn-outline-success btn-sm" id="addmoremobile">Click to add more mobile
+                        number</button>
+                </div>
+                <div id="moremobilecontainer" class="input-group has-validation">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <hr style="border:.5px solid #7d97a5">
+        </div>
+    </div>
+</div>

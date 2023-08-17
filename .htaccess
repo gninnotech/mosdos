@@ -1,0 +1,3 @@
+Options +Includes
+AddType application/x-httpd-php .html .htm .shtml text/html
+AddOutputFilter INCLUDES .shtml

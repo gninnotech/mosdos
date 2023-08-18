@@ -23,7 +23,7 @@ if($sk == 'Ezreini Stamford Hill'){
 }else{
 
 }
-$institutionstmtops = $pdo->prepare("SELECT * FROM institution_form WHERE community_id = '" . $kehillaidoption . "'");
+$institutionstmtops = $pdo->prepare("SELECT * FROM institution_form WHERE moisedList = '" . $sk . "'");
 $institutionstmtops->execute();
 $institutionarray = array();
 while ($institution_options = $institutionstmtops->fetch(PDO::FETCH_ASSOC)) {
@@ -33,15 +33,11 @@ while ($institution_options = $institutionstmtops->fetch(PDO::FETCH_ASSOC)) {
     </div>';
     array_push($institutionarray, $institutioncontent);
 }
-$none = '<div class="col-md-4 ms-3 form-check d-flex justify-content-end" id="hbyd">
-                    <input name="institutions[]" value="None" id="noinstitutions" class="form-check-input me-1" type="checkbox" required onchange="checkboxnone()">
-                    <label class="form-check-label">None</label>
-                </div>';
-array_push($institutionarray, $none);
+array_push($institutionarray);
 $institutionses = implode($institutionarray);
 
 $synagogarray = array();
-$synagogstmtops = $pdo->prepare("SELECT * FROM synagogue_form WHERE community_id = '" . $kehillaidoption . "'");
+$synagogstmtops = $pdo->prepare("SELECT * FROM synagogue_form WHERE moisedList = '" . $sk . "'");
 $synagogstmtops->execute();
 $synagoglabel = $synagogstmtops->fetch(PDO::FETCH_ASSOC);
 $label = $synagoglabel["synagogueHeader"];

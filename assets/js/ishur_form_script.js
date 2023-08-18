@@ -192,8 +192,68 @@ function addMoreNumber() {
 }
 addmoremobileButton.addEventListener('click', addMoreNumber);
 addmoremobileButton.addEventListener('touchstart', addMoreNumber);
+
+
+function myMobile(mobileType) {
+    var mobileDevice = mobileType.value;
+    var TagContainer = mobileType.closest('.col-md-6').querySelector('.TagContainer');
+    var StickerContainer = mobileType.closest('.col-md-6').querySelector('.StickerContainer');
+    var ImeiContainer = mobileType.closest('.col-md-6').querySelector('.ImeiContainer');
+    var TextContainer = mobileType.closest('.col-md-6').querySelector('.TextContainer');
+    var moised = document.getElementById("moised").value;
+    if (mobileType.length == 0) {
+        return;
+    } else {
+        const xmlhttps = new XMLHttpRequest();
+        xmlhttps.onload = function () {
+            const responseData = JSON.parse(this.response);
+            var tagValue = responseData.TagContainerValue;
+            if (tagValue == 'Not Applicable') {
+                TagContainer.innerHTML = '';
+            }else{
+                TagContainer.innerHTML = tagValue;
+            }
+            var stickerValue = responseData.stickerContainerValue;
+            if (stickerValue == 'Not Applicable') {
+                StickerContainer.innerHTML = '';
+            } else {
+                StickerContainer.innerHTML = stickerValue;
+            }
+            var ImeiValue = responseData.ImeiContainerValue;
+            if (ImeiValue == 'Not Applicable') {
+                ImeiContainer.innerHTML = '';
+            } else {
+                ImeiContainer.innerHTML = ImeiValue;
+            }
+            var TextValue = responseData.TextContainerValue;
+            if (TextValue == 'Not Applicable') {
+                TextContainer.innerHTML = '';
+            } else {
+                TextContainer.innerHTML = TextValue;
+            }
+
+        }
+        
+        xmlhttps.open("GET", "../../pages/form/basicmobileform.php?mtype=" + mobileDevice + "&kehilla=" + moised);
+        xmlhttps.send();
+    }
+};
 //Kehilla
 function selectedkehilla(selectedkehilla) {
+    var Basicphonequestions = document.getElementById("Basicphonequestions");
+        Basicphonequestions.classList.add("show");
+        Basicphonequestions.classList.remove("hidden");
+    const mobileDeviceSelects = document.querySelectorAll('.mobileDevice');
+
+    mobileDeviceSelects.forEach(select => {
+        // Store the original selected value in a custom attribute
+        if (!select.hasAttribute('data-original-value')) {
+            select.setAttribute('data-original-value', select.value);
+        }
+
+        // Set the select element's value back to the original value
+        select.value = select.getAttribute('data-original-value');
+    });
     if (selectedkehilla.length == 0) {
         document.getElementById("id_institution_container").innerHTML = "";
         document.getElementById("synagoguelabel").innerHTML = "";
@@ -272,81 +332,22 @@ function checkboxnone() {
     }
 }
 // basic mobile device
-document.addEventListener("DOMContentLoaded", function () {
-    function addAddressFields() {
-        const newAddressSet = `
-            <div class="col-md-6 mb-2 address-set">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <button class="btn btn-secondary" type="button">Owner</button>
-                            <select class="form-select ownerclss" name="mobileUser[]"  required>
-                                <option selected="" class="hidden" value="">Select Owner</option>
-                                <option value="Father">Father</option>
-                                <option value="Mother">Mother</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            <span id="spanbrikdel" class="input-group-text align-self-center bg-transparent border border-0 text-danger">
-                                <button class="btn btn-danger btn-sm remove-button">Delete</button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-2">
-                        <div class="input-group">
-                            <button class="btn btn-secondary" type="button">Phone Model</button>
-                            <select class="form-select text-center mobileDevice" name="mobileDevice[]" required onchange="myMobile(this)">
-                                <option selected="" class="hidden" value="">Phone Model</option>
-                                <?php include '../../pages/form/mobileoptions.php'; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-2 hidden TagContainer" id="id_FatherTagContainer">
-                        <div class="input-group">
-                            <input class="form-control btn btn-secondary w-50 Taglabel" type="text" id="id_FatherTaglabel">
-                            <select class="form-select text-center tagDetails" name="tagDetails[]">
-                                <option selected="" class="hidden" value="">Yes/No</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 text-danger smarphonecontaineralert">
-                    </div>
-                    <div class="col-md-12 mt-2 hidden StickerContainer" id="id_FatherStickerContainer">
-                        <div class="input-group">
-                            <input class="form-control btn btn-secondary w-50 Stickerlabel" type="text" id="id_FatherStickerlabel">
-                            <select class="form-select text-center stickerType" name="stickerType[]">
-                                <option selected="" class="hidden" value="">SELECT</option>
-                                <option>TAG</option>
-                                <option>Syog</option>
-                                <option class="kehillaStickerOption"></option>
-                                <option>Other</option>
-                                <option>None</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mt-2 hidden ImeiContainer" id="id_FatherImeiContainer">
-                        <input class="form-control imeiNumber" type="text" name="imeiNumber[]" placeholder="Enter 16 digit IMEI. To get your mobile IMEI Dial *#06# on your keypad" pattern="[0-9]{15,16}">
-                    </div>
-                    <div class="col-md-12 mt-2 hidden TextContainer" id="id_FatherTextContainer">
-                        <div class="input-group">
-                            <button class="btn btn-secondary" type="button">Is it Text Capable?</button>
-                            <select class="form-select text-center textCapabilities" name="textCapabilities[]">
-                                <option selected="" class="hidden" value="">Yes/No</option>
-                                <option>With text capabilities</option>
-                                <option>Without text capabilities</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                `;
 
-        const addressContainer = document.getElementById("morebrikcontainer");
-        addressContainer.insertAdjacentHTML("beforeend", newAddressSet);
+
+document.addEventListener("DOMContentLoaded", function () {
+    function clonebesicphone() {
+        var elementToClone = document.getElementById("cloneme");
+        var clonedElement = elementToClone.cloneNode(true);
+        clonedElement.classList.add("show");
+        clonedElement.classList.remove("hidden");
+        clonedElement.removeAttribute('id');
+        
+        var morebrikcontainer = document.getElementById("morebrikcontainer");
+        morebrikcontainer.appendChild(clonedElement);
+
     };
     document.getElementById("addbrik").addEventListener("click", function () {
-        addAddressFields();
+        clonebesicphone();
     });
     function removeAddressSet(event) {
         const removeButton = event.target;
@@ -359,108 +360,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-function myMobile(mobileType) {
-    var mobileDevice = mobileType.value;
-    var TagContainer = mobileType.closest('.col-md-6').querySelector('.TagContainer');
-    var Taglabel = mobileType.closest('.col-md-6').querySelector('.Taglabel');
-    var tagDetails = mobileType.closest('.col-md-6').querySelector('.tagDetails');
-    var StickerContainer = mobileType.closest('.col-md-6').querySelector('.StickerContainer');
-    var Stickerlabel = mobileType.closest('.col-md-6').querySelector('.Stickerlabel');
-    var stickerType = mobileType.closest('.col-md-6').querySelector('.stickerType');
-    var ImeiContainer = mobileType.closest('.col-md-6').querySelector('.ImeiContainer');
-    var imeiNumber = mobileType.closest('.col-md-6').querySelector('.imeiNumber');
-    var TextContainer = mobileType.closest('.col-md-6').querySelector('.TextContainer');
-    var textCapabilities = mobileType.closest('.col-md-6').querySelector('.textCapabilities');
-    var smarphonecontaineralert = mobileType.closest('.col-md-6').querySelector('.smarphonecontaineralert');
-    var kehillaStickerOption = mobileType.closest('.col-md-6').querySelector('.kehillaStickerOption');
-    var moised = document.getElementById("moised").value;
-    kehillaStickerOption.innerHTML = moised;
-    if (mobileDevice == "Smartphone") {
-        TagContainer.classList.add("hidden");
-        StickerContainer.classList.add("hidden");
-        ImeiContainer.classList.add("hidden");
-        TextContainer.classList.add("hidden");
-        Taglabel.value = "";
-        Stickerlabel.value = "";
-        tagDetails.removeAttribute('required');
-        stickerType.removeAttribute('required');
-        imeiNumber.removeAttribute('required');
-        textCapabilities.removeAttribute('required');
-        smarphonecontaineralert.innerHTML = "Smartphone information should be provided to the smartphone and tablet section below.";
-    } else if (mobileDevice == "None" || mobileDevice == "" || mobileDevice == 'Kosher Sumsung 2G') {
-        TagContainer.classList.add("hidden");
-        StickerContainer.classList.add("hidden");
-        ImeiContainer.classList.add("hidden");
-        TextContainer.classList.add("hidden");
-        Taglabel.value = "";
-        Stickerlabel.value = "";
-        tagDetails.removeAttribute('required');
-        stickerType.removeAttribute('required');
-        imeiNumber.removeAttribute('required');
-        textCapabilities.removeAttribute('required');
-        smarphonecontaineralert.innerHTML = "";
-    } else if (mobileDevice == "Other") {
-        TagContainer.classList.add("hidden");
-        StickerContainer.classList.add("hidden");
-        ImeiContainer.classList.remove("hidden");
-        TextContainer.classList.add("hidden");
-        Taglabel.value = "";
-        Stickerlabel.value = "";
-        tagDetails.removeAttribute('required');
-        stickerType.removeAttribute('required');
-        imeiNumber.setAttribute('required', 'required');
-        textCapabilities.removeAttribute('required');
-        smarphonecontaineralert.innerHTML = "";
-    } else if (mobileDevice == "Nokia 105") {
-        TagContainer.classList.remove("hidden");
-        ImeiContainer.classList.add("hidden");
-        TextContainer.classList.remove("hidden");
-        Taglabel.value = "Do you have version 2021 or later?";
-        tagDetails.removeAttribute('required');
-        imeiNumber.removeAttribute('required');
-        textCapabilities.setAttribute('required', 'required');
-        smarphonecontaineralert.innerHTML = "This can be checked by dialing*#0000#";
-        if (moised == 'Skver') {
-            StickerContainer.classList.remove("hidden");
-            Stickerlabel.value = "Select the type of sticker your mobile have?";
-            stickerType.setAttribute('required', 'required');
-        } else {
-            StickerContainer.classList.add("hidden");
-            Stickerlabel.value = "";
-            stickerType.removeAttribute('required');
-        }
-    } else if (mobileDevice == "Qin" || mobileDevice == "LG Wine Smart") {
-        TagContainer.classList.add("hidden");
-        StickerContainer.classList.remove("hidden");
-        ImeiContainer.classList.remove("hidden");
-        TextContainer.classList.remove("hidden");
-        Taglabel.value = "";
-        Stickerlabel.value = "Select the type of sticker your mobile have?";
-        tagDetails.removeAttribute('required');
-        stickerType.setAttribute('required', 'required');
-        imeiNumber.setAttribute('required', 'required');
-        textCapabilities.setAttribute('required', 'required');
-        smarphonecontaineralert.innerHTML = "";
-    } else {
-        TagContainer.classList.remove("hidden");
-        ImeiContainer.classList.add("hidden");
-        TextContainer.classList.remove("hidden");
-        Taglabel.value = "Is it blocked by PuriFone/TAG?";
-        tagDetails.setAttribute('required', 'required');
-        imeiNumber.removeAttribute('required');
-        textCapabilities.setAttribute('required', 'required');
-        smarphonecontaineralert.innerHTML = "";
-        if (moised == 'Skver') {
-            StickerContainer.classList.remove("hidden");
-            Stickerlabel.value = "Select the type of sticker your mobile have?";
-            stickerType.setAttribute('required', 'required');
-        } else {
-            StickerContainer.classList.add("hidden");
-            Stickerlabel.value = "";
-            stickerType.removeAttribute('required');
-        }
-    }
-};
 //computer and laptops office and home
 //opening question
 function opendesktopform(desktopform) {

@@ -1,10 +1,10 @@
 <?php
 try {
-    $kehila_policy_optionsandroid = $pdo->prepare("SELECT * FROM kehila_policy_options WHERE kehillaPolicyDetails != 'Cannot be under kehilla policy (Mosdos Technology Office)'");
-    $kehila_policy_optionsandroid->execute();
+    $kehila_policy_options = $pdo->prepare("SELECT DISTINCT filterPolicy FROM filter_policy_form WHERE deviceType = 'Smartphone' || deviceType = 'Tablet'");
+    $kehila_policy_options->execute();
 
-    while ($kehilapolicyoptionsandroid = $kehila_policy_optionsandroid->fetch(PDO::FETCH_ASSOC)) {
-        echo '<option value="' . $kehilapolicyoptionsandroid["kehillaPolicyDetails"] . '">' . $kehilapolicyoptionsandroid["kehillaPolicyDetails"] . '</option>';
+    while ($kehilapolicyoptions = $kehila_policy_options->fetch(PDO::FETCH_ASSOC)) {
+        echo '<option value="' . $kehilapolicyoptions["filterPolicy"] . '">' . $kehilapolicyoptions["filterPolicy"] . '</option>';
     }
 } catch (PDOException $e) {
     // Handle the error (display, log, etc.)

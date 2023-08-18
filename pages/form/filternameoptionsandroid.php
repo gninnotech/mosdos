@@ -1,10 +1,10 @@
 <?php
 try {
-    $filter_name_optionsandroid = $pdo->prepare("SELECT * FROM filter_name_options WHERE deviceType = 'android'");
-    $filter_name_optionsandroid->execute();
+    $filter_name_options = $pdo->prepare("SELECT DISTINCT filterName FROM filter_name_form WHERE deviceType = 'Smartphone' || deviceType = 'Tablet'");
+    $filter_name_options->execute();
 
-    while ($filternameoptionsandroid = $filter_name_optionsandroid->fetch(PDO::FETCH_ASSOC)) {
-        echo '<option value="' . $filternameoptionsandroid["filterNameDetails"] . '">' . $filternameoptionsandroid["filterNameDetails"] . '</option>';
+    while ($filternameoptions = $filter_name_options->fetch(PDO::FETCH_ASSOC)) {
+        echo '<option value="' . $filternameoptions["filterName"] . '">' . $filternameoptions["filterName"] . '</option>';
     }
 } catch (PDOException $e) {
     // Handle the error (display, log, etc.)

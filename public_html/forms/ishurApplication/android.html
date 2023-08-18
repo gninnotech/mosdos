@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12 hidden" id="mainmobilequestions">
     <div class="row">
         <div class="col-md-12">
             <label class="form-label">
@@ -76,7 +76,7 @@
                     <input class="form-control form-control-sm filterEmail" name="filterEmail[]" type="email" placeholder="Registered email">
                 </div>
                 <div class="col-md-2 mb-0 otherFilterContainer hidden">
-                    <input class="form-control form-control-sm otherFilter" name="otherFilter[]" value="" type="text" placeholder="" >
+                    <input class="form-control form-control-sm otherFilter" name="otherFilter[]" value="" type="text" placeholder="">
                 </div>
                 <div class="col-md-2 mb-0 hidden filterPolicyContainer">
                     <select class="form-select form-select-sm text-center filterPolicy" name="filterPolicy[]">
@@ -87,7 +87,7 @@
                 <div class="col-md-2 mb-0 hidden whatsappDetailContainer">
                     <select class="form-select form-select-sm text-center whatsappDetail" name="whatsappDetail[]" onchange="whatsappFinal(this)">
                         <option hidden selected value="">Whatsapp info</option>
-                    <?php include '../../pages/form/whatsappoption.php'; ?>
+                        <?php include '../../pages/form/whatsappoption.php'; ?>
                     </select>
                 </div>
                 <div class="col-md-1 mb-0 hidden androidRemoval">
@@ -97,10 +97,11 @@
                     <p>
                         <span class="hidden smartnoti">דעת רבני וועד עזרינו בארץ ובגולה שאשה הצריכה להשתמש עם
                             מכשיר לצורך פרנסה או רפואה, תשתמש בטאבלט ולא בסמארטפון</span>
-                            <span class="hidden whatsnoti">דעת רבני וועד עזרינו בארץ ובגולה שמי שצריך להשתמש בוואטסאפ לצורך פרנסה, ישתמש אך ורק
-                            בוואטסאפ מסונן</span></p>
+                        <span class="hidden whatsnoti">דעת רבני וועד עזרינו בארץ ובגולה שמי שצריך להשתמש בוואטסאפ לצורך פרנסה, ישתמש אך ורק
+                            בוואטסאפ מסונן</span>
+                    </p>
                 </div>
-                <div class="accordion mt-1 appliurlm" id="appliurlm">
+                <div class="accordion mt-1 hidden appliurlm" id="appliurlm">
                     <div class="accordion-item">
                         <h2 class="accordion-header headingOnem" id="headingOnem">
                             <button class="accordion-button appsurlbm" id="appsurlbm" type="button" data-bs-toggle="collapse" data-bs-target="#appsurlm" aria-expanded="true" aria-controls="collapseOne">
@@ -145,6 +146,9 @@
         </div>
         <div class="container-fluid androidContainer" id="androidContainer">
         </div>
+    </div>
+    <div class="col-md-12">
+        <hr>
     </div>
 </div>
 <script src="../../assets/js/ishur_form_script_android.js"></script>

@@ -241,8 +241,11 @@ function myMobile(mobileType) {
 //Kehilla
 function selectedkehilla(selectedkehilla) {
     var Basicphonequestions = document.getElementById("Basicphonequestions");
-        Basicphonequestions.classList.add("show");
+    var mainquestions = document.getElementById("mainquestions");
+    var mainmobilequestions = document.getElementById("mainmobilequestions");
         Basicphonequestions.classList.remove("hidden");
+        mainquestions.classList.remove("hidden");
+        mainmobilequestions.classList.remove("hidden");
     const mobileDeviceSelects = document.querySelectorAll('.mobileDevice');
 
     mobileDeviceSelects.forEach(select => {
@@ -360,251 +363,253 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-//computer and laptops office and home
-//opening question
-function opendesktopform(desktopform) {
-    var desktopquestions = desktopform.closest('.col-md-12').querySelector('.desktopquestions');
-    var primaryUser = desktopform.closest('.col-md-12').querySelector('.primaryUser');
-    var deviceCategory = desktopform.closest('.col-md-12').querySelector('.deviceCategory');
+
+//desktop
+
+function opendesktopform(opendesktop){
+    var desktopquestions = opendesktop.closest('.col-md-12').querySelector('.desktopquestions');
+    var deviceOwner = opendesktop.closest('.col-md-12').querySelector('.deviceOwner');
     desktopquestions.classList.remove("hidden");
-    primaryUser.setAttribute('required', 'required');
-    deviceCategory.setAttribute('required', 'required');
-
+    deviceOwner.setAttribute('required', 'required');
 
 }
-//selecting none
-function closedesktopform(desktopform) {
-    var desktopquestions = desktopform.closest('.col-md-12').querySelector('.desktopquestions');
-    var primaryUser = desktopform.closest('.col-md-12').querySelector('.primaryUser');
-    var deviceCategory = desktopform.closest('.col-md-12').querySelector('.deviceCategory');
-    var filtersettings = desktopform.closest('.col-md-12').querySelector('.filtersettings'); 
-    var filterName = desktopform.closest('.col-md-12').querySelector('.filterName');
-    var filterType = desktopform.closest('.col-md-12').querySelector('.filterType');
-    var attachedEmailContainer = desktopform.closest('.col-md-12').querySelector('.attachedEmailContainer');
-    var attachedEmail = desktopform.closest('.col-md-12').querySelector('.attachedEmail');
-    var filterPolicyContainer = desktopform.closest('.col-md-12').querySelector('.filterPolicyContainer');
-    var filterPolicy = desktopform.closest('.col-md-12').querySelector('.filterPolicy');
-    var filterAdditionalInformationContainer = desktopform.closest('.col-md-12').querySelector('.filterAdditionalInformationContainer');
-    var filterAdditionalInformation = desktopform.closest('.col-md-12').querySelector('.filterAdditionalInformation');
+
+function closedesktopform(closedesktop){
+    var desktopquestions = closedesktop.closest('.col-md-12').querySelector('.desktopquestions');
+    var deviceOwner = closedesktop.closest('.col-md-12').querySelector('.deviceOwner');
     desktopquestions.classList.add("hidden");
-    filtersettings.classList.add("hidden");
-    attachedEmailContainer.classList.add("hidden");
-    filterPolicyContainer.classList.add("hidden");
-    filterAdditionalInformationContainer.classList.add("hidden");
-    primaryUser.removeAttribute('required');
-    deviceCategory.removeAttribute('required');
-    filterName.removeAttribute('required');
-    filterType.removeAttribute('required');
-    filterPolicy.removeAttribute('required');
-    attachedEmail.removeAttribute('required');
-    filterAdditionalInformation.removeAttribute('required');
-    primaryUser.value = primaryUser.querySelector('option:first-of-type').value;
-    deviceCategory.value = deviceCategory.querySelector('option:first-of-type').value;
+    deviceOwner.removeAttribute("required");
+    deviceOwner.value = deviceOwner.querySelector('option:first-of-type').value;
+}
+//deviceowner
+function deviceOwnerFunction(selectedOwner) {
+    var deviceType = selectedOwner.closest('.originalss').querySelector('.deviceType');
+    deviceType.classList.remove("hidden");
+    deviceType.value = deviceType.querySelector('option:first-of-type').value;
+}
+
+//devicetype
+function deviceTypeFunction(selectedType) {
+    var filterName = selectedType.closest('.originalss').querySelector('.filterName');
+    filterName.classList.remove("hidden");
     filterName.value = filterName.querySelector('option:first-of-type').value;
-    filterType.value = filterType.querySelector('option:first-of-type').value;
-    filterPolicy.value = filterPolicy.querySelector('option:first-of-type').value;
-    attachedEmail.value('');
-    filterAdditionalInformation.value('');
-
 }
-//selecting device type
-function deviceCategoryFunction(deviceCategoryselect){
-    var deviceCategoryValue = deviceCategoryselect.value;
-    var filterName = deviceCategoryselect.closest('.originalss').querySelector('.filterName');
-    var filterType = deviceCategoryselect.closest('.originalss').querySelector('.filterType');
-    var filtersettings = deviceCategoryselect.closest('.originalss').querySelector('.filtersettings'); 
-    var applurl = deviceCategoryselect.closest('.originalss').querySelector('.applurl');
-    var display = deviceCategoryselect.closest('.originalss').querySelector('.display');
-    if (deviceCategoryValue == 'Home Desktop' || deviceCategoryValue == 'Home Laptop'){
-        filtersettings.classList.remove("hidden");
-        filterName.classList.remove("hidden");
-        filterType.classList.remove("hidden");
-        applurl.classList.remove("hidden");
-        filterName.setAttribute('required', 'required');
-        filterType.setAttribute('required', 'required');
-        display.setAttribute('required', 'required');
-    } else if (deviceCategoryValue == 'Office Desktop' || deviceCategoryValue == 'Office Laptop') {
-        filtersettings.classList.remove("hidden");
-        filterName.classList.remove("hidden");
-        filterType.classList.remove("hidden");
-        applurl.classList.add("hidden");
-        filterName.setAttribute('required', 'required');
-        filterType.setAttribute('required', 'required');
-        display.removeAttribute('required');
-    }else{
-        filtersettings.classList.add("hidden");
-        filterName.classList.add("hidden");
-        filterType.classList.add("hidden");
-        applurl.classList.add("hidden");
-        filterName.removeAttribute('required');
-        filterType.removeAttribute('required');
-        display.removeAttribute('required');
-        filterName.value = primaryUser.querySelector('option:first-of-type').value;
-        filterType.value = primaryUser.querySelector('option:first-of-type').value;
 
-    }
-}
 //selecting filter name
-function filterNameFunction(filterNameselect){
+function filterNameFunction(filterNameselect) {
     var filterNamevalue = filterNameselect.value;
-    var attachedEmailContainer = filterNameselect.closest('.originalss').querySelector('.attachedEmailContainer');
-    var filterPolicyContainer = filterNameselect.closest('.originalss').querySelector('.filterPolicyContainer');
-    var filterAdditionalInformationContainer = filterNameselect.closest('.originalss').querySelector('.filterAdditionalInformationContainer');
-    var attachedEmail = filterNameselect.closest('.originalss').querySelector('.attachedEmail');
-    var filterPolicy = filterNameselect.closest('.originalss').querySelector('.filterPolicy');
-    var filterAdditionalInformation = filterNameselect.closest('.originalss').querySelector('.filterAdditionalInformation');
-    var filterType = filterNameselect.closest('.originalss').querySelector('.filterType');
+    var deviceType = filterNameselect.closest('.originalss').querySelector('.deviceType');
+    var deviceTypeValue = deviceType.value;
+    var otherFilterContainer = filterNameselect.closest('.originalss').querySelector('.otherFilterContainer');
+    var otherFilter = filterNameselect.closest('.originalss').querySelector('.otherFilter');
     var addingmoredesktop = filterNameselect.closest('.originalss').querySelector('.addingmoredesktop');
-    if (filterNamevalue == 'Other'){
-        attachedEmailContainer.classList.add("hidden");
-        filterPolicyContainer.classList.add("hidden");
+    var filterEmailContainer = filterNameselect.closest('.originalss').querySelector('.filterEmailContainer');
+    var filterEmail = filterNameselect.closest('.originalss').querySelector('.filterEmail');
+    var filterPolicyContainer = filterNameselect.closest('.originalss').querySelector('.filterPolicyContainer');
+    var filterPolicy = filterNameselect.closest('.originalss').querySelector('.filterPolicy');
+    var appsurlcontainer = filterNameselect.closest('.originalss').querySelector('.appsurlcontainer');
+    var requestedAccess = filterNameselect.closest('.originalss').querySelector('.requestedAccess');
+    var filterType = filterNameselect.closest('.originalss').querySelector('.filterType');
+    var requestedAccess = filterNameselect.closest('.originalss').querySelector('.requestedAccess');
+    var otherFilter = filterNameselect.closest('.originalss').querySelector('.otherFilter');
+    var filterPolicy = filterNameselect.closest('.originalss').querySelector('.filterPolicy');
+    var filterEmail = filterNameselect.closest('.originalss').querySelector('.filterEmail');
+    otherFilter.value = '';
+    filterEmail.value = '';
+    filterPolicy.value = filterPolicy.querySelector('option:first-of-type').value;
+    filterType.value = filterType.querySelector('option:first-of-type').value;
+    if (filterNamevalue == 'Other') {
+        otherFilterContainer.classList.remove("hidden");
+        otherFilter.setAttribute('required', 'required');
         filterType.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.remove("hidden");
-        attachedEmail.removeAttribute('required');
-        filterPolicy.removeAttribute('required');
-        filterAdditionalInformation.setAttribute('placeholder','Specify other filter');
-        filterAdditionalInformation.setAttribute('required', 'required');
         filterType.removeAttribute('required');
-    } else if (filterNamevalue == 'No Filter'){
-        attachedEmailContainer.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
         filterPolicyContainer.classList.add("hidden");
-        filterType.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.removeAttribute('required');
         filterPolicy.removeAttribute('required');
-        filterAdditionalInformation.removeAttribute('required');
-        filterType.removeAttribute('required');
         addingmoredesktop.classList.remove("hidden");
-    } else if (filterNamevalue != 'No Filter' && filterNamevalue != 'Other' && filterNamevalue != ''){
-        attachedEmailContainer.classList.remove("hidden");
-        filterPolicyContainer.classList.remove("hidden");
-        filterType.classList.remove("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.setAttribute('required', 'required');
-        filterPolicy.setAttribute('required', 'required');
-        filterAdditionalInformation.removeAttribute('required');
-        filterType.setAttribute('required', 'required');
-    }else{
-        attachedEmailContainer.classList.add("hidden");
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
+    } else if (filterNamevalue == 'No Filter') {
+        otherFilterContainer.classList.add("hidden");
+        otherFilter.removeAttribute('required');
+        filterType.classList.add("hidden");
+        filterType.removeAttribute('required');
+        filterEmailContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
         filterPolicyContainer.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.removeAttribute('required');
         filterPolicy.removeAttribute('required');
-        filterAdditionalInformation.removeAttribute('required');
+        addingmoredesktop.classList.remove("hidden");
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
+    } else if ((deviceTypeValue == 'Home Desktop' || deviceTypeValue == 'Home Laptop') && filterNamevalue != 'No Filter' && filterNamevalue != 'Other') {
+        otherFilterContainer.classList.add("hidden");
+        otherFilter.removeAttribute('required');
+        filterType.classList.remove("hidden");
+        filterType.setAttribute('required', 'required');
+        addingmoredesktop.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
+        filterPolicyContainer.classList.add("hidden");
+        filterPolicy.removeAttribute('required');
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
+    } else if ((deviceTypeValue == 'Office Desktop' || deviceTypeValue == 'Office Laptop') && filterNamevalue != 'No Filter' && filterNamevalue != 'Other') {
+        otherFilterContainer.classList.add("hidden");
+        otherFilter.removeAttribute('required');
+        filterType.classList.add("hidden");
+        filterType.removeAttribute('required');
+        addingmoredesktop.classList.add("hidden");
+        filterEmailContainer.classList.remove("hidden");
+        filterEmail.setAttribute('required', 'required');
+        filterPolicyContainer.classList.remove("hidden");
+        filterPolicy.setAttribute('required', 'required');
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
+    } else {
+        otherFilterContainer.classList.add("hidden");
+        otherFilter.removeAttribute('required');
+        filterType.classList.add("hidden");
+        filterType.removeAttribute('required');
+        addingmoredesktop.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
+        filterPolicyContainer.classList.add("hidden");
+        filterPolicy.removeAttribute('required');
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
     }
-
+}
+function filterTypeFunction(selectedfiltertype) {
+    var filterTypevalue = selectedfiltertype.value;
+    var filterEmailContainer = selectedfiltertype.closest('.originalss').querySelector('.filterEmailContainer');
+    var filterEmail = selectedfiltertype.closest('.originalss').querySelector('.filterEmail');
+    var filterPolicyContainer = selectedfiltertype.closest('.originalss').querySelector('.filterPolicyContainer');
+    var filterPolicy = selectedfiltertype.closest('.originalss').querySelector('.filterPolicy');
+    var appsurlcontainer = selectedfiltertype.closest('.originalss').querySelector('.appsurlcontainer');
+    var requestedAccess = selectedfiltertype.closest('.originalss').querySelector('.requestedAccess');
+    if (filterTypevalue == 'Filter') {
+        appsurlcontainer.classList.remove("hidden");
+        requestedAccess.setAttribute('required', 'required');
+        filterEmailContainer.classList.remove("hidden");
+        filterEmail.setAttribute('required', 'required');
+        filterPolicyContainer.classList.remove("hidden");
+        filterPolicy.setAttribute('required', 'required');
+    } else {
+        appsurlcontainer.classList.add("hidden");
+        requestedAccess.removeAttribute('required');
+        filterEmailContainer.classList.remove("hidden");
+        filterEmail.setAttribute('required', 'required');
+        filterPolicyContainer.classList.remove("hidden");
+        filterPolicy.setAttribute('required', 'required');
+    }
 }
 //selecting policy
-function filterPolicyFunction(filterPolicyselect){
-    filterPolicyValue = filterPolicyselect.value;
-    filterAdditionalInformationContainer = filterPolicyselect.closest('.originalss').querySelector('.filterAdditionalInformationContainer');
-    filterAdditionalInformation = filterPolicyselect.closest('.originalss').querySelector('.filterAdditionalInformation');
+function filterPolicyFunction(filterPolicyselect) {
+    var filterPolicyValue = filterPolicyselect.value;
+    var otherFilterContainer = filterPolicyselect.closest('.originalss').querySelector('.otherFilterContainer');
+    var otherFilter = filterPolicyselect.closest('.originalss').querySelector('.otherFilter');
     var addingmoredesktop = filterPolicyselect.closest('.originalss').querySelector('.addingmoredesktop');
-    if (filterPolicyValue == 'Cannot be under kehilla policy (Mosdos Technology Office)'){
-        filterAdditionalInformationContainer.classList.remove("hidden");
-        filterAdditionalInformation.setAttribute('required', 'required');
-        filterAdditionalInformation.setAttribute('placeholder', 'Specify why it cannot be under MTO');
-        addingmoredesktop.classList.add("hidden");
-    }else{
-        filterAdditionalInformationContainer.classList.add("hidden");
-        filterAdditionalInformation.removeAttribute('required');
+    if (filterPolicyValue == 'Cannot be under kehilla policy (Mosdos Technology Office)') {
+        otherFilterContainer.classList.remove("hidden");
+        otherFilter.setAttribute('required', 'required');
+        otherFilter.setAttribute('placeholder', 'Specify why it cannot be under MTO');
+        addingmoredesktop.classList.remove("hidden");
+    } else {
+        otherFilterContainer.classList.add("hidden");
+        otherFilter.removeAttribute('required');
         addingmoredesktop.classList.remove("hidden");
     }
-
 }
 //other info
-function filterAdditionalInformationFunction(filterAdditionalInformationselect){
+function filterAdditionalInformationFunction(filterAdditionalInformationselect) {
     var filterAdditionalInformationValue = filterAdditionalInformationselect.value;
     var addingmoredesktop = filterAdditionalInformationselect.closest('.originalss').querySelector('.addingmoredesktop');
-    if (filterAdditionalInformationValue != ''){
+    if (filterAdditionalInformationValue != '') {
         addingmoredesktop.classList.remove("hidden");
-    }else{
+    } else {
         addingmoredesktop.classList.add("hidden");
     }
 }
 //apps and url push array
 var arrayapp = [];
 function insertAppAndUrl(selectElement) {
-    var inputValue = selectElement.closest('.originalss').querySelector('.inputValue').value;
     var inputValues = selectElement.closest('.originalss').querySelector('.inputValue');
-    var display = selectElement.closest('.originalss').querySelector('.display');
-    arrayapp.push(inputValue);
-    display.innerHTML = arrayapp.join(", ");
-    display.value = arrayapp.join(", ");
-    inputValues.innerHTML = 'Type Websites/Category here. . .';
-    inputValues.value = '';
-    inputValues.setAttribute('placeholder', 'Type Websites/Category here. . .');
-}
-
-function myNoMoreCloneFunction(selectElement) {
-    var addingmoredesktop = selectElement.closest('.originalss').querySelector('.addingmoredesktop');
-    var addingagain = selectElement.closest('.originalss').querySelector('.addingagain');
-    var desktopclone1 = selectElement.closest('.originalss').querySelector('.desktopclone1');
-    var nomoredesktopclone2 = selectElement.closest('.originalss').querySelector('.nomoredesktopclone2');
-    addingmoredesktop.classList.add("hidden");
-    addingmoredesktop.classList.remove("show");
-    addingagain.classList.add("show");
-    addingagain.classList.remove("hidden");
-    desktopclone1.removeAttribute('required');
-    nomoredesktopclone2.removeAttribute('required');
-}
-
-function myPreviousoptionFunction(selectElement) {
-    var addingmoredesktop = selectElement.closest('.originalss').querySelector('.addingmoredesktop');
-    var addingagain = selectElement.closest('.originalss').querySelector('.addingagain');
-    var desktopclone1 = selectElement.closest('.originalss').querySelector('.desktopclone1');
-    var nomoredesktopclone2 = selectElement.closest('.originalss').querySelector('.nomoredesktopclone2');
-    addingmoredesktop.classList.add("show");
-    addingmoredesktop.classList.remove("hidden");
-    addingagain.classList.add("hidden");
-    addingagain.classList.remove("show");
-    desktopclone1.setAttribute('required', 'required');
-    nomoredesktopclone2.setAttribute('required', 'required');
+    var inputValue = inputValues.value;
+    var requestedAccess = selectElement.closest('.originalss').querySelector('.requestedAccess');
+    if (inputValue.length > 0){
+        arrayapp.push(inputValue);
+        requestedAccess.innerHTML = arrayapp.join(", ");
+        requestedAccess.value = arrayapp.join(", ");
+        inputValues.innerHTML = 'Type Websites/Category here. . .';
+        inputValues.value = '';
+        inputValues.setAttribute('placeholder', 'Type Websites/Category here. . .');
+    }
 }
 var cloneDesktopCount = 0;
 function cloneDesktopElement(selectElement) {
-    var addingmoredesktop = selectElement.closest('.originalss').querySelector('.addingmoredesktop');
-    var desktopclone1 = selectElement.closest('.originalss').querySelector('.desktopclone1');
-    var nomoredesktopclone2 = selectElement.closest('.originalss').querySelector('.nomoredesktopclone2');
-    addingmoredesktop.classList.remove("show");
-    addingmoredesktop.classList.add("hidden");
-    desktopclone1.checked = false;
-    addingmoredesktop.removeAttribute('required');
-    desktopclone1.removeAttribute('required');
-    nomoredesktopclone2.removeAttribute('required');
-
-
-    cloneDesktopCount++;
     var elementToClone = document.getElementById("originalss");
+    var morepcdevcontainer = document.getElementById("morepcdevcontainer");
+    var addingmoredesktop = selectElement.closest('.originalss').querySelector('.addingmoredesktop');
+    var addingagain = selectElement.closest('.originalss').querySelector('.addingagain');
+    addingmoredesktop.classList.add("hidden");
+    addingagain.classList.remove("hidden");
     var clonedElement = elementToClone.cloneNode(true);
-    var uniqueId = "desktopclone-" + cloneDesktopCount;
-    clonedElement.id = uniqueId;
-    clonedElement.querySelector('.appsurlb').setAttribute('data-bs-target', '#appsurl' + cloneDesktopCount );
-    clonedElement.querySelector('.appsurl').id = "appsurl" + cloneDesktopCount;
     clonedElement.querySelector('.deldev').classList.remove("hidden");
-    clonedElement.querySelector('.display').value = '';
-    clonedElement.querySelector('.display').innerHTML = '';
-    clonedElement.querySelector('.insertBtn').removeAttribute("onclick");
-    clonedElement.querySelector('.insertBtn').removeAttribute("ontouchstart");
+    clonedElement.removeAttribute('id');
+    var deviceOwner = clonedElement.querySelector('.deviceOwner');
+    clonedElement.querySelector('.deviceOwner').value = deviceOwner.querySelector('option:first-of-type').value;
+    var deviceType = clonedElement.querySelector('.deviceType');
+    clonedElement.querySelector('.deviceType').value = deviceType.querySelector('option:first-of-type').value;
+    var filterName = clonedElement.querySelector('.filterName');
+    clonedElement.querySelector('.filterName').value = filterName.querySelector('option:first-of-type').value;
+    var filterType = clonedElement.querySelector('.filterType');
+    clonedElement.querySelector('.filterType').value = filterType.querySelector('option:first-of-type').value;
+    var filterPolicy = clonedElement.querySelector('.filterPolicy');
+    clonedElement.querySelector('.filterPolicy').value = filterPolicy.querySelector('option:first-of-type').value;
+    clonedElement.querySelector('.filterEmail').value ='';
+    clonedElement.querySelector('.otherFilter').value ='';
+    clonedElement.querySelector('.deviceType').removeAttribute('required');
+    clonedElement.querySelector('.filterName').removeAttribute('required');
+    clonedElement.querySelector('.filterType').removeAttribute('required');
+    clonedElement.querySelector('.filterPolicy').removeAttribute('required');
+    clonedElement.querySelector('.filterEmail').removeAttribute('required');
+    clonedElement.querySelector('.otherFilter').removeAttribute('required');
+    clonedElement.querySelector('.deviceType').classList.add("hidden");
+    clonedElement.querySelector('.filterName').classList.add("hidden");
+    clonedElement.querySelector('.filterType').classList.add("hidden");
+    clonedElement.querySelector('.filterPolicyContainer').classList.add("hidden");
+    clonedElement.querySelector('.filterEmailContainer').classList.add("hidden");
+    clonedElement.querySelector('.otherFilterContainer').classList.add("hidden");
+    clonedElement.querySelector('.addingagain').classList.add("hidden");
+    clonedElement.querySelector('.desktopclone1').checked = false;
+    clonedElement.querySelector('.nomoredesktopclone2').checked = false;
+    clonedElement.querySelector('.appsurlcontainer').classList.add("hidden");
+    clonedElement.querySelector('.requestedAccess').value = '';
+    clonedElement.querySelector('.requestedAccess').removeAttribute('required');
+    clonedElement.querySelector('.insertBtn').removeAttribute('onclick');
+    clonedElement.querySelector('.insertBtn').removeAttribute('ontouchstart');
     clonedElement.querySelector('.insertBtn').setAttribute("onclick", "insertAppAndUrl" + cloneDesktopCount + "(this)");
     clonedElement.querySelector('.insertBtn').setAttribute("ontouchstart", "insertAppAndUrl" + cloneDesktopCount + "(this)");
     var script = document.createElement('script');
     script.textContent = `
-    var arrayapps${cloneDesktopCount} = [];
-    function insertAppAndUrl${cloneDesktopCount}(selectElements) {
-      var insertBtn = selectElements.value;
-      var inputValue = selectElements.closest('.originalss').querySelector('.inputValue').value;
-      var display = selectElements.closest('.originalss').querySelector('.display');
-      arrayapps${cloneDesktopCount}.push(inputValue).value;
-      display.innerHTML = arrayapps${cloneDesktopCount}.join(", ");
-      display.value = arrayapps${cloneDesktopCount}.join(", ");
+    var arrayapp${cloneDesktopCount} = [];
+function insertAppAndUrl${cloneDesktopCount}(selectElement) {
+    var inputValues = selectElement.closest('.originalss').querySelector('.inputValue');
+    var inputValue = inputValues.value;
+    var requestedAccess = selectElement.closest('.originalss').querySelector('.requestedAccess');
+    if (inputValue.length > 0){
+        arrayapp${cloneDesktopCount}.push(inputValue);
+        requestedAccess.innerHTML = arrayapp${cloneDesktopCount}.join(", ");
+        requestedAccess.value = arrayapp${cloneDesktopCount}.join(", ");
+        inputValues.innerHTML = 'Type Websites/Category here. . .';
+        inputValues.value = '';
+        inputValues.setAttribute('placeholder', 'Type Websites/Category here. . .');
     }
+}
   `;
     clonedElement.appendChild(script);
-    var morepcdevcontainer = document.getElementById("morepcdevcontainer");
     morepcdevcontainer.appendChild(clonedElement);
-    
-
 }
 function deleteDesktopElement(element) {
     var originalss = element.closest('.originalss');

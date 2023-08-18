@@ -3,13 +3,13 @@
 
 function openandroidform(startqselect) {
     var androidQuestions = document.getElementById("androidQuestions");
-    var primaryUser = startqselect.closest('.row').querySelector('.primaryUser');
-    var deviceCategory = startqselect.closest('.row').querySelector('.deviceCategory');
+    var deviceOwner = startqselect.closest('.row').querySelector('.deviceOwner');
+    var deviceType = startqselect.closest('.row').querySelector('.deviceType');
     var filterName = startqselect.closest('.row').querySelector('.filterName');
     var displaym = startqselect.closest('.row').querySelector('.displaym');
     androidQuestions.classList.remove("hidden");
-    primaryUser.setAttribute('required', 'required');
-    deviceCategory.setAttribute('required', 'required');
+    deviceOwner.setAttribute('required', 'required');
+    deviceType.setAttribute('required', 'required');
     filterName.setAttribute('required', 'required');
     displaym.setAttribute('required', 'required');
 
@@ -22,9 +22,9 @@ function closeandroidform() {
 function smartphonealert(selecteddevicetype) {
     var devicetypeValue = selecteddevicetype.value;
     var moised = document.getElementById("moised").value;
-    var primaryUser = selecteddevicetype.closest('.androidOrigin').querySelector('.primaryUser').value;
+    var deviceOwner = selecteddevicetype.closest('.androidOrigin').querySelector('.deviceOwner').value;
     var smartnoti = selecteddevicetype.closest('.androidOrigin').querySelector('.smartnoti');
-    if (devicetypeValue == 'Smartphone' && moised == 'Ezreini Stamford Hill' && primaryUser == 'Mother') {
+    if (devicetypeValue == 'Smartphone' && moised == 'Ezreini Stamford Hill' && deviceOwner == 'Mother') {
         smartnoti.classList.remove("hidden");
     } else {
         smartnoti.classList.add("hidden");
@@ -33,68 +33,80 @@ function smartphonealert(selecteddevicetype) {
 }
 function selectedFilterName(filternameselected) {
     var filternameValue = filternameselected.value;
-    var attachedEmailContainer = filternameselected.closest('.androidOrigin').querySelector('.attachedEmailContainer');
+    var filterEmailContainer = filternameselected.closest('.androidOrigin').querySelector('.filterEmailContainer');
     var filterPolicyContainer = filternameselected.closest('.androidOrigin').querySelector('.filterPolicyContainer');
-    var whatsappSettingsContainer = filternameselected.closest('.androidOrigin').querySelector('.whatsappSettingsContainer');
-    var filterAdditionalInformationContainer = filternameselected.closest('.androidOrigin').querySelector('.filterAdditionalInformationContainer');
+    var whatsappDetailContainer = filternameselected.closest('.androidOrigin').querySelector('.whatsappDetailContainer');
+    var otherFilterContainer = filternameselected.closest('.androidOrigin').querySelector('.otherFilterContainer');
     var addingmoreandroid = filternameselected.closest('.androidOrigin').querySelector('.addingmoreandroid');
-    var attachedEmail = filternameselected.closest('.androidOrigin').querySelector('.attachedEmail');
+    var filterEmail = filternameselected.closest('.androidOrigin').querySelector('.filterEmail');
     var filterPolicy = filternameselected.closest('.androidOrigin').querySelector('.filterPolicy');
-    var whatsappSettings = filternameselected.closest('.androidOrigin').querySelector('.whatsappSettings');
-    var filterAdditionalInformation = filternameselected.closest('.androidOrigin').querySelector('.filterAdditionalInformation');
+    var whatsappDetail = filternameselected.closest('.androidOrigin').querySelector('.whatsappDetail');
+    var otherFilter = filternameselected.closest('.androidOrigin').querySelector('.otherFilter');
+    var appliurlm = filternameselected.closest('.androidOrigin').querySelector('.appliurlm');
+    var displaym = filternameselected.closest('.androidOrigin').querySelector('.displaym');
+    var moised = document.getElementById("moised").value;
     if (filternameValue == 'Delta Mobile' || filternameValue == 'iPhone restrictions/perental control' || filternameValue == 'No Filter') {
-        attachedEmailContainer.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
         filterPolicyContainer.classList.add("hidden");
-        whatsappSettingsContainer.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.removeAttribute('required');
+        otherFilterContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
         filterPolicy.removeAttribute('required');
-        whatsappSettings.removeAttribute('required');
-        filterAdditionalInformation.removeAttribute('required');
+        otherFilter.removeAttribute('required');
         addingmoreandroid.classList.remove("hidden");
+        appliurlm.classList.add("hidden");
+        displaym.removeAttribute('required');
     } else if (filternameValue == 'Other') {
-        attachedEmailContainer.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
         filterPolicyContainer.classList.add("hidden");
-        whatsappSettingsContainer.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.remove("hidden");
-        attachedEmail.removeAttribute('required');
+        otherFilterContainer.classList.remove("hidden");
+        filterEmail.removeAttribute('required');
         filterPolicy.removeAttribute('required');
-        whatsappSettings.removeAttribute('required');
-        filterAdditionalInformation.setAttribute('required', 'required');
-        filterAdditionalInformation.setAttribute('placeholder', 'Specify filter name');
+        otherFilter.setAttribute('required', 'required');
+        otherFilter.setAttribute('placeholder', 'Specify filter name');
         addingmoreandroid.classList.remove("hidden");
+        appliurlm.classList.add("hidden");
+        displaym.removeAttribute('required');
     } else if (filternameValue != 'Delta Mobile' && filternameValue != 'iPhone restrictions/perental control' && filternameValue != 'No Filter' && filternameValue != 'Other' && filternameValue != '') {
-        attachedEmailContainer.classList.remove("hidden");
+        filterEmailContainer.classList.remove("hidden");
         filterPolicyContainer.classList.remove("hidden");
-        whatsappSettingsContainer.classList.remove("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.setAttribute('required', 'required');
+        otherFilterContainer.classList.add("hidden");
+        filterEmail.setAttribute('required', 'required');
         filterPolicy.setAttribute('required', 'required');
-        whatsappSettings.setAttribute('required', 'required');
-        filterAdditionalInformation.removeAttribute('required');
+        otherFilter.removeAttribute('required');
         addingmoreandroid.classList.remove("hidden");
+        appliurlm.classList.remove("hidden");
+        displaym.setAttribute('required', 'required');
     } else {
-        attachedEmailContainer.classList.add("hidden");
+        filterEmailContainer.classList.add("hidden");
         filterPolicyContainer.classList.add("hidden");
-        whatsappSettingsContainer.classList.add("hidden");
-        filterAdditionalInformationContainer.classList.add("hidden");
-        attachedEmail.removeAttribute('required');
+        otherFilterContainer.classList.add("hidden");
+        filterEmail.removeAttribute('required');
         filterPolicy.removeAttribute('required');
-        whatsappSettings.removeAttribute('required');
-        filterAdditionalInformation.removeAttribute('required');
+        otherFilter.removeAttribute('required');
         addingmoreandroid.classList.add("hidden");
+        appliurlm.classList.add("hidden");
+        displaym.removeAttribute('required');
     }
+    if (moised == 'Gur' || moised == 'Ezreini Stamford Hill'){
+        whatsappDetailContainer.classList.add("hidden");
+        whatsappDetail.removeAttribute('required');
+    }else{
+        whatsappDetail.setAttribute('required', 'required');
+        whatsappDetailContainer.classList.remove("hidden");
+    }
+
+
 }
 function whatsappFinal(whatsappselect) {
     var whatsappValue = whatsappselect.value;
     var moised = document.getElementById("moised").value;
-    var primaryUser = whatsappselect.closest('.androidOrigin').querySelector('.primaryUser').value;
+    var deviceOwner = whatsappselect.closest('.androidOrigin').querySelector('.deviceOwner').value;
     var whatsnoti = whatsappselect.closest('.androidOrigin').querySelector('.whatsnoti');
     var addingmoreandroid = whatsappselect.closest('.androidOrigin').querySelector('.addingmoreandroid');
-    if (whatsappValue == 'Unfiltered Whatsapp' && moised == 'Ezreini Stamford Hill' && primaryUser == 'Mother') {
+    if (whatsappValue == 'Unfiltered Whatsapp' && moised == 'Ezreini Stamford Hill' && deviceOwner == 'Mother') {
         whatsnoti.classList.remove("hidden");
         addingmoreandroid.classList.remove("hidden");
-    } else if (whatsappValue != 'Unfiltered Whatsapp' && moised != 'Ezreini Stamford Hill' && primaryUser != 'Mother' && whatsappValue != '') {
+    } else if (whatsappValue != 'Unfiltered Whatsapp' && moised != 'Ezreini Stamford Hill' && deviceOwner != 'Mother' && whatsappValue != '') {
         whatsnoti.classList.add("hidden");
         addingmoreandroid.classList.remove("hidden");
     } else {
@@ -165,12 +177,12 @@ function cloneAndroidElement(selectElement) {
     var clonedElement = elementToClone.cloneNode(true);
     var uniqueId = "androidclone-" + cloneAndroidCount;
     clonedElement.id = uniqueId;
-    clonedElement.querySelector('.attachedEmailContainer').classList.add("hidden");
+    clonedElement.querySelector('.filterEmailContainer').classList.add("hidden");
     clonedElement.querySelector('.filterPolicyContainer').classList.add("hidden");
-    clonedElement.querySelector('.whatsappSettingsContainer').classList.add("hidden");
-    clonedElement.querySelector('.attachedEmail').removeAttribute("required");
+    clonedElement.querySelector('.whatsappDetailContainer').classList.add("hidden");
+    clonedElement.querySelector('.filterEmail').removeAttribute("required");
     clonedElement.querySelector('.filterPolicy').removeAttribute("required");
-    clonedElement.querySelector('.whatsappSettings').removeAttribute("required");
+    clonedElement.querySelector('.whatsappDetail').removeAttribute("required");
     clonedElement.querySelector('.appsurlbm').setAttribute('data-bs-target', '#appsurl' + cloneAndroidCount);
     clonedElement.querySelector('.appsurlm').id = "appsurl" + cloneAndroidCount;
     clonedElement.querySelector('.androidRemoval').classList.remove("hidden");

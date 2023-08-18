@@ -51,17 +51,17 @@
                 ?>
                  <tr>
                      <td>
-                         <?php echo $dashboard["Fullname"]; ?>
+                         <?php echo $dashboard["fullName"]; ?>
                      </td>
                      <td>
                          <?php
-                            $style = "text-align:center;width:15pt; border-radius: 50%; background-color:" . htmlspecialchars($dashboard["credibilityRating"]) . ";color:" . htmlspecialchars($dashboard["credibilityRating"]) . ";";
+                            $style = "text-align:center;width:15pt; border-radius: 50%; background-color:" . htmlspecialchars($dashboard["rating"]) . ";color:" . htmlspecialchars($dashboard["rating"]) . ";";
                             $text = ".";
-                            if ($dashboard["credibilityRating"] == "Green") {
+                            if ($dashboard["rating"] == "Green") {
                                 $text = "1";
-                            } elseif ($dashboard["credibilityRating"] == "Orange") {
+                            } elseif ($dashboard["rating"] == "Orange") {
                                 $text = "2";
-                            } elseif ($dashboard["credibilityRating"] == "Red") {
+                            } elseif ($dashboard["rating"] == "Red") {
                                 $text = "3";
                             }
                             echo '<p style="' . $style . '" class="badge">' . $text . '</p>';
@@ -73,30 +73,30 @@
                      </td>
                      <td>
                          <?php
-                            $institution = str_replace('|', '<br>', $dashboard["institution"]);
-                            echo $institution; ?>
+                            $institutionlist = str_replace('|', '<br>', $dashboard["institutionlist"]);
+                            echo $institutionlist; ?>
                      </td>
                      <td>
-                         <?php echo $dashboard["synagogue"]; ?>
+                         <?php echo $dashboard["shul"]; ?>
                      </td>
                      <td>
-                         <?php echo $dashboard["formStatus"]; ?>
+                         <?php echo $dashboard["ishurStatus"]; ?>
                      </td>
                      <td class="ps-0 pt-0">
-                         <input type="text" class="btn btn-link text-start ms-0 mt-0 ps-0 pt-0" onclick="handleClick(this)" value="<?php echo $dashboard['username']; ?>">
+                         <input type="text" class="btn btn-link text-start ms-0 mt-0 ps-0 pt-0" onclick="handleClick(this)" value="<?php echo $dashboard['userName']; ?>">
                      </td>
                      <td>
                          <?php
-                            if (isset($dashboard["deviceCategory"]) && !empty($dashboard["deviceCategory"])) {
-                            $deviceCategory = str_replace('|', '<br>', $dashboard["deviceCategory"]);
-                            echo $deviceCategory;
+                            if (isset($dashboard["deviceTypes"]) && !empty($dashboard["deviceTypes"])) {
+                            $deviceTypes = str_replace('|', '<br>', $dashboard["deviceTypes"]);
+                            echo $deviceTypes;
                             } ?>
                      </td>
                      <td>
                          <?php
-                         if(isset($dashboard["filterPolicy"]) && !empty($dashboard["filterPolicy"])){
-                            $filterPolicy = str_replace('|', '<br>', $dashboard["filterPolicy"]);
-                            echo $filterPolicy;
+                         if(isset($dashboard["filterPolicies"]) && !empty($dashboard["filterPolicies"])){
+                            $filterPolicies = str_replace('|', '<br>', $dashboard["filterPolicies"]);
+                            echo $filterPolicies;
                             } ?>
                      </td>
 

@@ -12,7 +12,6 @@ function sanitizeInput($data)
         return is_string($data) ? trim(stripslashes(htmlspecialchars($data))) : $data;
     }
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = sanitizeInput($_POST);
     if(isset($data["id_users"]) && !empty($data["id_users"])){

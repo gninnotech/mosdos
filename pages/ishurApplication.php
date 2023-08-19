@@ -463,11 +463,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $stmtappsinsert->bindParam(2, $appcommit, PDO::PARAM_STR);
                             $stmtappsinsert->execute();
                             $stmtappsinsert->closeCursor();
-
                         }
                     }
 
-                    if(isset($whatsappDetailValue) && !empty($whatsappDetailValue)){
+                    if (isset($whatsappDetailValue) && !empty($whatsappDetailValue)) {
                         $insertwhat = "INSERT INTO whatsapp_settings (mainDevice_id, whatsappDetail) VALUES (?, ?)";
                         $stmtwhatinsert = $pdo->prepare($insertwhat);
                         $stmtwhatinsert->bindParam(1, $mainDevice_id, PDO::PARAM_STR);
@@ -475,9 +474,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $stmtwhatinsert->execute();
                         $stmtwhatinsert->closeCursor();
                     }
-
-
-
                 }
             }
 
@@ -507,12 +503,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ProcessUnderReviewDevice = 'ProcessUnderReviewDevice';
             $deviceUnderReview = $pdo->prepare("CALL $ProcessUnderReviewDevice()");
             $deviceUnderReview->execute();
+            $whatsAppStatusUpdate = 'whatsAppStatusUpdate';
+            $whatsAppReview = $pdo->prepare("CALL $whatsAppStatusUpdate()");
+            $whatsAppReview->execute();
 
             $moisedValue = $data["moised"];
             $destinedroute = '';
-            if($moisedValue == 'Ezreini Stamford Hill' || $moisedValue == 'Mishmeres-Satmar' || $moisedValue == 'Gur' || $moisedValue == 'Venishmartem (Belz 99)' || $moisedValue == 'Westcliff' || $moisedValue == 'Beis Chinuch'){
-                $destinedroute = '../checkout.html?appid='.$application_id;
-            }else{
+            if ($moisedValue == 'Ezreini Stamford Hill' || $moisedValue == 'Mishmeres-Satmar' || $moisedValue == 'Gur' || $moisedValue == 'Venishmartem (Belz 99)' || $moisedValue == 'Westcliff' || $moisedValue == 'Beis Chinuch') {
+                $destinedroute = '../checkout.html?appid=' . $application_id;
+            } else {
                 $destinedroute = 'home.html';
             }
 

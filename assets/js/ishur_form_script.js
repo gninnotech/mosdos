@@ -177,7 +177,7 @@ function addMoreNumber() {
     var clonedElement = addmobilecloneElement.cloneNode(true);
     clonedElement.classList.add("show");
     clonedElement.classList.remove("hidden");
-    var clonedInput = clonedElement.querySelector('input[name="contactNumber[]"]');
+    var clonedInput = clonedElement.querySelector('input[name="mobileNumber[]"]');
     clonedInput.required = true;
     clonedInput.id = "mmCinfo-" + cloneMobileCount;
     var deleteButton = document.createElement('button');
@@ -616,4 +616,16 @@ function deleteDesktopElement(element) {
     if (originalss) {
         originalss.remove();
     }
+}
+function myNoMoreCloneFunction(selectElement) {
+    var addingmoredesktop = selectElement.closest('.originalss').querySelector('.addingmoredesktop');
+    var addingagain = selectElement.closest('.originalss').querySelector('.addingagain');
+    var desktopclone1 = selectElement.closest('.originalss').querySelector('.desktopclone1');
+    var nomoredesktopclone2 = selectElement.closest('.originalss').querySelector('.nomoredesktopclone2');
+    addingmoredesktop.classList.add("hidden");
+    addingmoredesktop.classList.remove("show");
+    addingagain.classList.add("show");
+    addingagain.classList.remove("hidden");
+    desktopclone1.removeAttribute('required');
+    nomoredesktopclone2.removeAttribute('required');
 }

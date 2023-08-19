@@ -47,29 +47,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 text-start mb-2 originalss" id="originalss">
+                <div class="col-md-12 text-start originalss" id="originalss">
                     <div class="row">
-                        <div class="col-md-1 mb-0 ps-0 pe-0">
+                        <div class="col-md-1 mb-2 ps-0 pe-0 me-1 ms-1">
                             <select class="form-select form-select-sm text-center deviceOwner" name="deviceOwner[]" onchange="deviceOwnerFunction(this)">
                                 <option value="" class="hidden">Choose</option>
                                 <?php include '../../pages/form/desktopownerform.php'; ?>
                             </select>
                         </div>
-                        <div class="col-md-2 mb-0">
+                        <div class="col-md-2 mb-2 ps-0 pe-0 ms-1 me-1">
                             <select class="form-select form-select-sm text-center hidden deviceType" name="deviceType[]" onchange="deviceTypeFunction(this)">
                                 <option value="" class="hidden">Select Type</option>
                                 <?php include '../../pages/form/homeandlaptop.php'; ?>
                             </select>
                         </div>
-                        <div class="col-md-2 mb-0 filtersettings">
+                        <div class="col-md-2 ps-0 pe-0 ms-1 me-1 filtersettings">
                             <div class="row">
-                                <div class="col-md-6 mb-0 ps-0 pe-1">
-                                    <select class="form-select form-select-sm text-center- hidden filterName" name="filterName[]" onchange="filterNameFunction(this)">
+                                <div class="col-md-6 mb-2">
+                                    <select class="form-select form-select-sm text-center hidden filterName" name="filterName[]" onchange="filterNameFunction(this)">
                                         <option value="" class="hidden">Name</option>
                                         <?php include '../../pages/form/filternameoptionsdesktops.php'; ?>
                                     </select>
                                 </div>
-                                <div class="col-md-6 mb-0 ps-1 pe-0">
+                                <div class="col-md-6 mb-2">
                                     <select class="form-select form-select-sm text-center filterType hidden" name="filterType[]" onchange="filterTypeFunction(this)">
                                         <option value="" class="hidden">Type</option>
                                         <?php include '../../pages/form/filtertypeoptions.php'; ?>
@@ -77,22 +77,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2 mb-0 hidden filterEmailContainer">
-                            <input class="form-control form-control-sm filterEmail" name="filterEmail[]" type="email" placeholder="Registered email">
+                        <div class="col-md-2 mb-2 ps-0 pe-0 ms-1 me-1 hidden filterEmailContainer">
+                            <input class="form-control form-control-sm text-center filterEmail" name="filterEmail[]" type="email" placeholder="Registered email">
                         </div>
-                        <div class="col-md-2 mb-0 filterPolicyContainer hidden">
+                        <div class="col-md-2 mb-2 ps-0 pe-0 ms-1 me-1 filterPolicyContainer hidden">
                             <select class="form-select form-select-sm text-center filterPolicy" name="filterPolicy[]" onchange="filterPolicyFunction(this)">
                                 <option class="hidden" selected value="">Select policy</option>
                                 <?php include '../../pages/form/policyoptiondesktop.php'; ?>
                             </select>
                         </div>
-                        <div class="col-md-2 mb-0 otherFilterContainer hidden">
+                        <div class="col-md-2 mb-2 ps-0 pe-0 ms-1 me-1 otherFilterContainer hidden">
                             <input class="form-control form-control-sm otherFilter" name="otherFilter[]" value="" type="text" placeholder="" onchange="otherFilterFunction(this)">
                             <select class="form-select form-select-sm text-center hidden" name="whatsappDetail[]" >
                                 <option hidden selected value="">Whatsapp info</option>
                             </select>
                         </div>
-                        <div class="col-md-1 mb-0 hidden deldev">
+                        <div class="col-md-1 mb-2 ps-0 pe-0 ms-1 me-1 hidden deldev">
                             <button class="btn btn-danger btn-sm deleteDesktopElement" onclick="deleteDesktopElement(this)">Delete</button>
                         </div>
                         <div class="accordion mt-1 mb-2 hidden appsurlcontainer mt-2">
@@ -125,9 +125,9 @@
                                 <hr>
                                 <div class="input-group input-group-sm mb-3">
                                     <span class="me-2">Do you have other desktop/laptop? </span>
-                                    <input type="radio" class="form-check-input desktopclone1 me-1" id="desktopclone1" name="desktops" required onchange="cloneDesktopElement(this)">
+                                    <input type="radio" class="form-check-input desktopclone1 me-1" id="desktopclone1" name="desktops"  onchange="cloneDesktopElement(this)">
                                     <label class="form-check-label ms-1 me-1">Yes</label>
-                                    <input type="radio" class="form-check-input nomoredesktopclone2 me-1 ms-1" id="nomoredesktopclone2" name="desktops" required onchange="myNoMoreCloneFunction(this)">
+                                    <input type="radio" class="form-check-input nomoredesktopclone2 me-1 ms-1" id="nomoredesktopclone2" name="desktops"  onchange="myNoMoreCloneFunction(this)">
                                     <label class="form-check-label ms-1">None</label>
                                 </div>
                             </div>

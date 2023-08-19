@@ -508,8 +508,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $deviceUnderReview = $pdo->prepare("CALL $ProcessUnderReviewDevice()");
             $deviceUnderReview->execute();
 
+            $moisedValue = $data["moised"];
+            $destinedroute = '';
+            if($moisedValue == 'Ezreini Stamford Hill' || $moisedValue == 'Mishmeres-Satmar' || $moisedValue == 'Gur' || $moisedValue == 'Venishmartem (Belz 99)' || $moisedValue == 'Westcliff' || $moisedValue == 'Beis Chinuch'){
+                $destinedroute = '../checkout.html?appid='.$application_id;
+            }else{
+                $destinedroute = 'home.html';
+            }
 
-            $response = array('status' => 'success', 'destination' => 'home.html');
+            $response = array('status' => 'success', 'destination' => $destinedroute);
             echo json_encode($response);
         }
     } else {

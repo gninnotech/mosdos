@@ -210,7 +210,7 @@ function myMobile(mobileType) {
             var tagValue = responseData.TagContainerValue;
             if (tagValue == 'Not Applicable') {
                 TagContainer.innerHTML = '';
-            }else{
+            } else {
                 TagContainer.innerHTML = tagValue;
             }
             var stickerValue = responseData.stickerContainerValue;
@@ -233,7 +233,7 @@ function myMobile(mobileType) {
             }
 
         }
-        
+
         xmlhttps.open("GET", "../../pages/form/basicmobileform.php?mtype=" + mobileDevice + "&kehilla=" + moised);
         xmlhttps.send();
     }
@@ -243,9 +243,9 @@ function selectedkehilla(selectedkehilla) {
     var Basicphonequestions = document.getElementById("Basicphonequestions");
     var mainquestions = document.getElementById("mainquestions");
     var mainmobilequestions = document.getElementById("mainmobilequestions");
-        Basicphonequestions.classList.remove("hidden");
-        mainquestions.classList.remove("hidden");
-        mainmobilequestions.classList.remove("hidden");
+    Basicphonequestions.classList.remove("hidden");
+    mainquestions.classList.remove("hidden");
+    mainmobilequestions.classList.remove("hidden");
     const mobileDeviceSelects = document.querySelectorAll('.mobileDevice');
 
     mobileDeviceSelects.forEach(select => {
@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
         clonedElement.classList.add("show");
         clonedElement.classList.remove("hidden");
         clonedElement.removeAttribute('id');
-        
+
         var morebrikcontainer = document.getElementById("morebrikcontainer");
         morebrikcontainer.appendChild(clonedElement);
 
@@ -366,7 +366,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //desktop
 
-function opendesktopform(opendesktop){
+function opendesktopform(opendesktop) {
     var desktopquestions = opendesktop.closest('.col-md-12').querySelector('.desktopquestions');
     var deviceOwner = opendesktop.closest('.col-md-12').querySelector('.deviceOwner');
     desktopquestions.classList.remove("hidden");
@@ -374,7 +374,7 @@ function opendesktopform(opendesktop){
 
 }
 
-function closedesktopform(closedesktop){
+function closedesktopform(closedesktop) {
     var desktopquestions = closedesktop.closest('.col-md-12').querySelector('.desktopquestions');
     var deviceOwner = closedesktop.closest('.col-md-12').querySelector('.deviceOwner');
     desktopquestions.classList.add("hidden");
@@ -537,7 +537,7 @@ function insertAppAndUrl(selectElement) {
     var inputValues = selectElement.closest('.originalss').querySelector('.inputValue');
     var inputValue = inputValues.value;
     var requestedAccess = selectElement.closest('.originalss').querySelector('.requestedAccess');
-    if (inputValue.length > 0){
+    if (inputValue.length > 0) {
         arrayapp.push(inputValue);
         requestedAccess.innerHTML = arrayapp.join(", ");
         requestedAccess.value = arrayapp.join(", ");
@@ -567,8 +567,8 @@ function cloneDesktopElement(selectElement) {
     clonedElement.querySelector('.filterType').value = filterType.querySelector('option:first-of-type').value;
     var filterPolicy = clonedElement.querySelector('.filterPolicy');
     clonedElement.querySelector('.filterPolicy').value = filterPolicy.querySelector('option:first-of-type').value;
-    clonedElement.querySelector('.filterEmail').value ='';
-    clonedElement.querySelector('.otherFilter').value ='';
+    clonedElement.querySelector('.filterEmail').value = '';
+    clonedElement.querySelector('.otherFilter').value = '';
     clonedElement.querySelector('.deviceType').removeAttribute('required');
     clonedElement.querySelector('.filterName').removeAttribute('required');
     clonedElement.querySelector('.filterType').removeAttribute('required');

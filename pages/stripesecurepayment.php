@@ -94,4 +94,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updateApplicationPayment->execute([$paid, $application_id]);
 
 }
-?>

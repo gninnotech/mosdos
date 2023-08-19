@@ -1,5 +1,6 @@
 <?php
-include '../conn/dbConnection.php';
+include '../database/dbConnection.php';
+//sanitation
 function sanitizeInput($data)
 {
     if (is_array($data)) {
@@ -14,25 +15,26 @@ function sanitizeInput($data)
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = sanitizeInput($_POST);
-    if(isset($data["id_users"]) && !empty($data["id_users"])){
-        $id_users = htmlspecialchars($data["id_users"]);
-    }else{
-        //variable container
-        $username = $firstName = $lastName = $address = $fatherOccupation = $hebrewFirstName = $hebrewSurname = $postal = $motherOccupation = $name_father_emailAddress = $name_mother_emailAddress = $name_home_contactNumber = $name_father_contactNumber = $name_mother_contactNumber =
-        $usernameErr = $firstNameErr = $lastNameErr = $addressErr = $fatherOccupationErr = $hebrewFirstNameErr = $hebrewSurnameErr = $postalErr = $motherOccupationErr = $name_father_emailAddressErr = $name_mother_emailAddressErr = $name_home_contactNumberErr = $name_father_contactNumberErr = $name_mother_contactNumberErr = "";
-
+    if(!isset($data["user_id"]) && empty($data["user_id"])){
+      
+        //variable container 
+        $userName = $firstName = $Surname = $address = $fatherOccupation = $hebrewName = $hebrewSurname = $postal = $motherOccupation = $preferredContactMethod =
+        $name_father_emailAddress = $name_mother_emailAddress = $name_home_contactNumber = $name_father_contactNumber = $name_mother_contactNumber = $mobileNumber = $emailAddress = 
+        $userNameErr = $firstNameErr = $SurnameErr = $addressErr = $fatherOccupationErr = $hebrewNameErr = $hebrewSurnameErr = $postalErr = $motherOccupationErr = $userNameErr = $preferredContactMethodErr =
+        $name_father_emailAddressErr = $name_mother_emailAddressErr = $name_home_contactNumberErr = $name_father_contactNumberErr = $name_mother_contactNumberErr = $mobileNumberErr = $emailAddressErr = "";
+    
         //validation
         $firstName = $data["firstName"];
-        $lastName = $data["lastName"];
+        $Surname = $data["Surname"];
         $address = $data["address"];
         $fatherOccupation = $data["fatherOccupation"];
-        $hebrewFirstName = $data["hebrewFirstName"];
+        $hebrewName = $data["hebrewName"];
         $hebrewSurname = $data["hebrewSurname"];
         $postal = $data["postal"];
         $motherOccupation = $data["motherOccupation"];
         $preferredContactMethod = $data["preferredContactMethod"];
         $hebrewpattern = "/^[\p{L}[:space:]!-@[-`{-~]+$/u";
-        $username = $data["username"];
+        $userName = $data["userName"];
         $emailpattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
         $name_father_emailAddress = $data["name_father_emailAddress"];
         $name_mother_emailAddress = $data["name_mother_emailAddress"];
@@ -40,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name_father_contactNumber = $data["name_father_contactNumber"];
         $name_mother_contactNumber = $data["name_mother_contactNumber"];
 
-        $userstmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-        $userstmt->execute([$username]);
-        $users = $userstmt->fetch();
-        $usersCount = $userstmt->rowCount();
+        $accountstmts = $pdo->prepare("SELECT * FROM accounts WHERE userName = ?");
+        $accountstmts->execute([$userName]);
+        $accounts = $accountstmts->fetch();
+        $accountsValue = $accountstmts->rowCount();
 
-        if($usersCount > 0){
-            $usernameErr = $username.' is already in use, try a different one or reset your password.';
+        if ($accountsValue > 0) {
+            $userNameErr = $username . ' is already in use, try a different one or reset your password.';
         }
 
         if (empty($firstName)) {
@@ -58,12 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        if (empty($lastName)) {
-            $lastNameErr = "Lastname is required";
+        if (empty($Surname)) {
+            $SurnameErr = "Surname is required";
         } else {
             // Check if the name contains only letters and whitespace
-            if (!preg_match("/^[a-zA-Z ]*$/", $lastName)) {
-                $lastNameErr = "Only letters and white space allowed";
+            if (!preg_match("/^[a-zA-Z ]*$/", $Surname)) {
+                $SurnameErr = "Only letters and white space allowed";
             }
         }
         if (empty($address)) {
@@ -72,16 +74,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($postal)) {
             $postalErr = "Postal is required";
         }
-        if (empty($hebrewFirstName)) {
-            $hebrewFirstNameErr = "Hebrew firstname is required";
-        }else{
-            if (!preg_match($hebrewpattern, $hebrewFirstName)) {
-                $hebrewFirstNameErr = "Hebrew letters and white space allowed";
+        if (empty($hebrewName)) {
+            $hebrewNameErr = "Hebrew firstname is required";
+        } else {
+            if (!preg_match($hebrewpattern, $hebrewName)) {
+                $hebrewNameErr = "Hebrew letters and white space allowed";
             }
         }
         if (empty($hebrewSurname)) {
             $hebrewSurnameErr = "Hebrew firstname is required";
-        }else{
+        } else {
             if (!preg_match($hebrewpattern, $hebrewSurname)) {
                 $hebrewSurnameErr = "Hebrew letters and white space allowed";
             }
@@ -99,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name_mother_emailAddressErr = "Your mother email is invalid";
         }
         $homeContact = '';
-        if(!empty($name_home_contactNumber)){
+        if (!empty($name_home_contactNumber)) {
             $homeContact =  preg_replace('/[^0-9]/', '', $name_home_contactNumber);
         }
         $fatherContact = '';
@@ -110,89 +112,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($name_mother_contactNumber)) {
             $motherContact =  preg_replace('/[^0-9]/', '', $name_mother_contactNumber);
         }
-        $errors = array(
-            $usernameErr,
-            $firstNameErr,
-            $lastNameErr,
-            $addressErr,
-            $fatherOccupationErr,
-            $hebrewFirstNameErr,
-            $hebrewSurnameErr,
-            $postalErr,
-            $motherOccupationErr,
-            $name_father_emailAddressErr,
-            $name_mother_emailAddressErr
-        );
-        if (empty(array_filter($errors))) {
-            //users
-            $username = $data["username"];
-            $password = password_hash('test1234', PASSWORD_DEFAULT);
+        $errors = array($userNameErr, $firstNameErr, $SurnameErr, $addressErr, $fatherOccupationErr, $hebrewNameErr, $hebrewSurnameErr, $postalErr, $motherOccupationErr, $name_father_emailAddressErr, $name_mother_emailAddressErr);
+        if (!empty(array_filter($errors))) {
+            $response = array('status' => 'Fail', 'destination' => $errors);
+            echo json_encode($response);
+        }else{
 
-            $insertusers = "INSERT INTO users (username, password) VALUES (?, ?)";
-            $stmtinsertuser = $pdo->prepare($insertusers);
-            $stmtinsertuser->bindParam(1, $username, PDO::PARAM_STR);
-            $stmtinsertuser->bindParam(2, $password, PDO::PARAM_STR);
-            $stmtinsertuser->execute();
-            $id_users = $pdo->lastInsertId();
-            $stmtinsertuser->closeCursor();
-            //account settings
-            $preferredContactMethod = $data["preferredContactMethod"];
+        //insert new account data
+        $userName = $data["userName"];
+        $password = password_hash('test1234', PASSWORD_DEFAULT);
+        $insertusers = "INSERT INTO accounts (userName, password) VALUES (?, ?)";
+        $stmtinsertuser = $pdo->prepare($insertusers);
+        $stmtinsertuser->bindParam(1, $userName, PDO::PARAM_STR);
+        $stmtinsertuser->bindParam(2, $password, PDO::PARAM_STR);
+        $stmtinsertuser->execute();
+        $user_ids = $pdo->lastInsertId();
+        $stmtinsertuser->closeCursor();
+        //insert new 
+        //account settings
+        $firstName = $data["firstName"];
+        $Surname = $data["Surname"];
+        $hebrewName = $data["hebrewName"];
+        $hebrewSurname = $data["hebrewSurname"];
+        $address = $data["address"];
+        $postal = $data["postal"];
+        $fatherOccupation = $data["fatherOccupation"];
+        $motherOccupation = $data["motherOccupation"];
+        $preferredContactMethod = $data["preferredContactMethod"];
+        
+        $insertuser_information = "INSERT INTO user_information 
+        (user_id, firstName, Surname, hebrewName, hebrewSurname, address, postal, fatherOccupation, motherOccupation, preferredContact) 
+        VALUES 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmtsinsertInformation = $pdo->prepare($insertuser_information);
+        $stmtsinsertInformation->bindParam(1, $user_ids, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(2, $firstName, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(3, $Surname, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(4, $hebrewName, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(5, $hebrewSurname, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(6, $address, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(7, $postal, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(8, $fatherOccupation, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(9, $motherOccupation, PDO::PARAM_STR);
+        $stmtsinsertInformation->bindParam(10, $preferredContactMethod, PDO::PARAM_STR);
+        $stmtsinsertInformation->execute();
+        $stmtsinsertInformation->closeCursor();
 
-            $insertaccntsettings = "INSERT INTO account_settings (id_users, preferredContactMethod) VALUES (?, ?)";
-            $stmtinsertaccntsetting = $pdo->prepare($insertaccntsettings);
-            $stmtinsertaccntsetting->bindParam(1, $id_users, PDO::PARAM_STR);
-            $stmtinsertaccntsetting->bindParam(2, $preferredContactMethod, PDO::PARAM_STR);
-            $stmtinsertaccntsetting->execute();
-            $stmtinsertaccntsetting->closeCursor();
-
-
-            //basic_informations table
-            $firstName = $data["firstName"];
-            $lastName = $data["lastName"];
-            $hebrewFirstName = $data["hebrewFirstName"];
-            $hebrewSurname = $data["hebrewSurname"];
-            $address = $data["address"];
-            $postal = $data["postal"];
-
-            $insertbasicinformation = "INSERT INTO basic_informations (id_users, firstName, lastName, hebrewFirstName, hebrewSurname, address, postal) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmtinsertbasicinfo = $pdo->prepare($insertbasicinformation);
-            $stmtinsertbasicinfo->bindParam(1, $id_users, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(2, $firstName, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(3, $lastName, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(4, $hebrewFirstName, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(5, $hebrewSurname, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(6, $address, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->bindParam(7, $postal, PDO::PARAM_STR);
-            $stmtinsertbasicinfo->execute();
-            $stmtinsertbasicinfo->closeCursor();
-
-            //parent_information table
-            $fatherOccupation = $data["fatherOccupation"];
-            $motherOccupation = $data["motherOccupation"];
-
-            $insertparentinformation = "INSERT INTO parent_information (id_users, fatherOccupation, motherOccupation) VALUES (?, ?, ?)";
-            $stmtinsertparentinfo = $pdo->prepare($insertparentinformation);
-            $stmtinsertparentinfo->bindParam(1, $id_users, PDO::PARAM_STR);
-            $stmtinsertparentinfo->bindParam(2, $fatherOccupation, PDO::PARAM_STR);
-            $stmtinsertparentinfo->bindParam(3, $motherOccupation, PDO::PARAM_STR);
-            $stmtinsertparentinfo->execute();
-            $stmtinsertparentinfo->closeCursor();
 
             //email_address_information
             $name_father_emailAddress = $data["name_father_emailAddress"];
             $name_mother_emailAddress = $data["name_mother_emailAddress"];
             $emailAddress = $data["emailAddress"];
-        
-            $insertemailAddress = "INSERT INTO email_address_information (id_users, registeredUser, emailAddress) VALUES (?, ?, ?)";
-            $stmtinsertemailinfo = $pdo->prepare($insertemailAddress);
-            $stmtinsertemailinfo->bindParam(1, $id_users, PDO::PARAM_STR);
 
-            if(isset($name_father_emailAddress) && !empty($name_father_emailAddress)){
+            $insertemailAddress = "INSERT INTO emails (user_id, accountHolder, emailAddress) VALUES (?, ?, ?)";
+            $stmtinsertemailinfo = $pdo->prepare($insertemailAddress);
+            $stmtinsertemailinfo->bindParam(1, $user_ids, PDO::PARAM_STR);
+
+            if (isset($name_father_emailAddress) && !empty($name_father_emailAddress)) {
                 $registeredUser = 'Father';
                 $stmtinsertemailinfo->bindParam(2, $registeredUser, PDO::PARAM_STR);
                 $stmtinsertemailinfo->bindParam(3, $name_father_emailAddress, PDO::PARAM_STR);
                 $stmtinsertemailinfo->execute();
-                
             }
 
             if (isset($name_mother_emailAddress) && !empty($name_mother_emailAddress)) {
@@ -201,29 +181,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtinsertemailinfo->bindParam(3, $name_mother_emailAddress, PDO::PARAM_STR);
                 $stmtinsertemailinfo->execute();
             }
-            $stmtinsertemailinfo->closeCursor(); 
+            $stmtinsertemailinfo->closeCursor();
 
             for ($i = 0; $i < count($emailAddress); $i++) {
                 if (!empty($emailAddress[$i])) {
                     $emailAddressValue = isset($emailAddress[$i]) ? $emailAddress[$i] : "";
-                
+
                     $registeredUser = 'Other';
-                    $stmtinsertemailinfo->bindParam(1, $id_users, PDO::PARAM_STR);
+                    $stmtinsertemailinfo->bindParam(1, $user_ids, PDO::PARAM_STR);
                     $stmtinsertemailinfo->bindValue(2, $registeredUser, PDO::PARAM_STR);
                     $stmtinsertemailinfo->bindValue(3, $emailAddressValue, PDO::PARAM_STR);
                     $stmtinsertemailinfo->execute();
-                    $stmtinsertemailinfo->closeCursor(); 
+                    $stmtinsertemailinfo->closeCursor();
                 }
             }
+
+            //phone contact
             //phone number
             $name_home_contactNumber = $data["name_home_contactNumber"];
             $name_father_contactNumber = $data["name_father_contactNumber"];
             $name_mother_contactNumber = $data["name_mother_contactNumber"];
-            $contactNumber = $data["contactNumber"];
+            $mobileNumber = $data["mobileNumber"];
 
-            $insertphone = "INSERT INTO phone_numbers (id_users, contactName, contactNumber) VALUES (?, ?, ?)";
+            $insertphone = "INSERT INTO phone_directory (user_id, mobileOwner, mobileNumber) VALUES (?, ?, ?)";
             $stmtinsertphoneinfo = $pdo->prepare($insertphone);
-            $stmtinsertphoneinfo->bindParam(1, $id_users, PDO::PARAM_STR);
+            $stmtinsertphoneinfo->bindParam(1, $user_ids, PDO::PARAM_STR);
 
             if (isset($name_father_contactNumber) && !empty($name_father_contactNumber)) {
                 $registeredUser = 'Father';
@@ -245,168 +227,175 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmtinsertphoneinfo->bindParam(3, $name_home_contactNumber, PDO::PARAM_STR);
                 $stmtinsertphoneinfo->execute();
             }
-            $stmtinsertphoneinfo->closeCursor(); 
-            for ($i = 0; $i < count($contactNumber); $i++) {
-                if (!empty($contactNumber[$i])) {
-                    $contactNumberValue = isset($contactNumber[$i]) ? $contactNumber[$i] : "";
-
+            $stmtinsertphoneinfo->closeCursor();
+            for ($i = 0; $i < count($mobileNumber); $i++) {
+                if (!empty($mobileNumber[$i])) {
+                    $mobileNumberValue = isset($mobileNumber[$i]) ? $mobileNumber[$i] : "";
                     $registeredUser = 'Other';
-                    $stmtinsertphoneinfo->bindParam(1, $id_users, PDO::PARAM_STR);
+                    $stmtinsertphoneinfo->bindParam(1, $user_ids, PDO::PARAM_STR);
                     $stmtinsertphoneinfo->bindValue(2, $registeredUser, PDO::PARAM_STR);
-                    $stmtinsertphoneinfo->bindValue(3, $contactNumberValue, PDO::PARAM_STR);
-                    $stmtinsertphoneinfo->execute();
-                    $stmtinsertphoneinfo->closeCursor(); 
-                    
-                }
-            }
-            //form index
-            $insertformIndex = "INSERT INTO form_index (id_users) VALUES (?)";
-            $stmtformIndex = $pdo->prepare($insertformIndex);
-            $stmtformIndex->bindParam(1, $id_users, PDO::PARAM_STR);
-            $stmtformIndex->execute();
-            $id_formIndex = $pdo->lastInsertId();
-            $stmtformIndex->closeCursor();
-
-            //community
-            $synagogueinput = $data["synagogueinput"];
-            $synagogue = $data["synagogue"];
-            $moised = $data["moised"];
-
-            $pushSynagogue = '';
-            if($synagogue == 'Other'){
-             $pushSynagogue = $synagogueinput;
-            }else{
-                $pushSynagogue = $synagogue;
-            }
-
-            $insertkehillainformation = "INSERT INTO kehillainformation (id_users, id_formIndex, moised, synagogue) VALUES (?, ?, ?, ?)";
-            $stmtkehillainfo = $pdo->prepare($insertkehillainformation);
-            $stmtkehillainfo->bindParam(1, $id_users, PDO::PARAM_STR);
-            $stmtkehillainfo->bindParam(2, $id_formIndex, PDO::PARAM_STR);
-            $stmtkehillainfo->bindParam(3, $moised, PDO::PARAM_STR);
-            $stmtkehillainfo->bindParam(4, $pushSynagogue, PDO::PARAM_STR);
-            $stmtkehillainfo->execute();
-            $id_kehilla = $pdo->lastInsertId();
-            $stmtkehillainfo->closeCursor();
-
-            //institutions
-            
-            $insertphone = "INSERT INTO institution_information (id_formIndex, id_kehilla, institution) VALUES (?, ?, ?)";
-            $stmtinsertphoneinfo = $pdo->prepare($insertphone);
-            $institutions = $data["institutions"];
-            for ($i = 0; $i < count($institutions); $i++) {
-                if (!empty($institutions[$i])) {
-                    $institutionsValue = isset($institutions[$i]) ? $institutions[$i] : "";
-                    $stmtinsertphoneinfo->bindParam(1, $id_formIndex, PDO::PARAM_STR);
-                    $stmtinsertphoneinfo->bindValue(2, $id_kehilla, PDO::PARAM_STR);
-                    $stmtinsertphoneinfo->bindValue(3, $institutionsValue, PDO::PARAM_STR);
+                    $stmtinsertphoneinfo->bindValue(3, $mobileNumberValue, PDO::PARAM_STR);
                     $stmtinsertphoneinfo->execute();
                     $stmtinsertphoneinfo->closeCursor();
                 }
             }
 
+            //application form insert
+            $insertformIndex = "INSERT INTO application_forms (user_id) VALUES (?)";
+            $stmtformIndex = $pdo->prepare($insertformIndex);
+            $stmtformIndex->bindParam(1, $user_ids, PDO::PARAM_STR);
+            $stmtformIndex->execute();
+            $application_id = $pdo->lastInsertId();
+            $stmtformIndex->closeCursor();
+
+            //community
+           
+            $moised = $data["moised"];
+
+            $insertkehillainformation = "INSERT INTO community (application_id, user_id, moised ) VALUES (?, ?, ?)";
+            $stmtkehillainfo = $pdo->prepare($insertkehillainformation);
+            $stmtkehillainfo->bindParam(1, $application_id, PDO::PARAM_STR);
+            $stmtkehillainfo->bindParam(2, $user_ids, PDO::PARAM_STR);
+            $stmtkehillainfo->bindParam(3, $moised, PDO::PARAM_STR);
+            $stmtkehillainfo->execute();
+            $kehilla_id = $pdo->lastInsertId();
+            $stmtkehillainfo->closeCursor();
+
+            //synagogue input
+            $synagogueinput = $data["synagogueinput"];
+            $synagogue = $data["synagogue"];
+
+            $pushSynagogue = '';
+            if ($synagogue == 'Other') {
+                $pushSynagogue = $synagogueinput;
+            } else {
+                $pushSynagogue = $synagogue;
+            }
+            $insertsynagogueinformation = "INSERT INTO synagogue (kehilla_id, shul) VALUES (?, ?)";
+            $stmtsynagogueinfo = $pdo->prepare($insertsynagogueinformation);
+            $stmtsynagogueinfo->bindParam(1, $kehilla_id, PDO::PARAM_STR);
+            $stmtsynagogueinfo->bindParam(2, $pushSynagogue, PDO::PARAM_STR);
+            $stmtsynagogueinfo->execute();
+            $stmtsynagogueinfo->closeCursor();
+            //institutions
+            $insertschool = "INSERT INTO institutions (kehilla_id, institution) VALUES (?, ?)";
+            $stmtsschool = $pdo->prepare($insertschool);
+            $institution = $data["institutions"];
+            for ($i = 0; $i < count($institution); $i++) {
+                if (!empty($institution[$i])) {
+                    $institutionValue = isset($institution[$i]) ? $institution[$i] : "";
+                    $stmtsschool->bindParam(1, $kehilla_id, PDO::PARAM_STR);
+                    $stmtsschool->bindParam(2, $institutionValue, PDO::PARAM_STR);
+                    $stmtsschool->execute();
+                    $stmtsschool->closeCursor();
+                }
+            }
+
             //basic mobile device
-            $mobileIdArray = array();
-            $insertmobile = "INSERT INTO mobile_list (id_formIndex, mobileUser, mobileDevice) VALUES (?, ?, ?)";
-            $stmtmobileinsert = $pdo->prepare($insertmobile);
-            $mobileUser = $data["mobileUser"];
             $mobileDevice = $data["mobileDevice"];
+            $mobileUser = $data["mobileUser"];
+            if(isset($data["tagDetails"]) && !empty($data["tagDetails"])){
+                $tagDetails = $data["tagDetails"];
+            }else{
+                $tagDetails = '';
+            }
+
+            if (isset($data["imeiNumber"]) && !empty($data["imeiNumber"])) {
+                $imeiNumber = $data["imeiNumber"];
+            } else {
+                $imeiNumber = '';
+            }
+
+            if (isset($data["stickerType"]) && !empty($data["stickerType"])) {
+                $stickerType = $data["stickerType"];
+            } else {
+                $stickerType = '';
+            }
+
+            if (isset($data["textCapabilities"]) && !empty($data["textCapabilities"])) {
+                $textCapabilities = $data["textCapabilities"];
+            } else {
+                $textCapabilities = '';
+            }
+
             for ($i = 0; $i < count($mobileDevice); $i++) {
                 if (!empty($mobileDevice[$i]) && $mobileDevice != 'None') {
+                    
+
                     $mobileUserValue = isset($mobileUser[$i]) ? $mobileUser[$i] : "";
                     $mobileDeviceValue = isset($mobileDevice[$i]) ? $mobileDevice[$i] : "";
+                    $tagDetailsValue = isset($tagDetails[$i]) ? $tagDetails[$i] : "";
+                    $imeiNumberValue = isset($imeiNumber[$i]) ? $imeiNumber[$i] : "";
+                    $stickerTypeValue = isset($stickerType[$i]) ? $stickerType[$i] : "";
+                    $textCapabilitiesValue = isset($textCapabilities[$i]) ? $textCapabilities[$i] : "";
 
-                    $stmtmobileinsert->bindParam(1, $id_formIndex, PDO::PARAM_STR);
+                    $insertmobile = "INSERT INTO mobile_devices (application_id, mobileUser, model, textCapabilities) VALUES (?, ?, ?, ?)";
+                    $stmtmobileinsert = $pdo->prepare($insertmobile);
+                    $stmtmobileinsert->bindParam(1, $application_id, PDO::PARAM_STR);
                     $stmtmobileinsert->bindValue(2, $mobileUserValue, PDO::PARAM_STR);
                     $stmtmobileinsert->bindValue(3, $mobileDeviceValue, PDO::PARAM_STR);
+                    $stmtmobileinsert->bindValue(4, $textCapabilitiesValue, PDO::PARAM_STR);
                     $stmtmobileinsert->execute();
-                    $id_mobileValue = $pdo->lastInsertId();
-                    array_push($mobileIdArray, $id_mobileValue);
+                    $mobile_id = $pdo->lastInsertId();
                     $stmtmobileinsert->closeCursor();
+
+                    if(isset($tagDetailsValue) && !empty($tagDetailsValue)){
+                        $inserttagmobile = "INSERT INTO tag_settings (mobile_id, blockDetail) VALUES (?, ?)";
+                        $stmttagmobileinsert = $pdo->prepare($inserttagmobile);
+                        $stmttagmobileinsert->bindParam(1, $mobile_id, PDO::PARAM_STR);
+                        $stmttagmobileinsert->bindValue(2, $tagDetailsValue, PDO::PARAM_STR);
+                        $stmttagmobileinsert->execute();
+                        $stmtmobileinsert->closeCursor();
+                    }
+
+                    if (isset($stickerTypeValue) && !empty($stickerTypeValue)) {
+                        $insertstickermobile = "INSERT INTO sticker_settings (mobile_id, stickerDetail) VALUES (?, ?)";
+                        $stmtstickermobileinsert = $pdo->prepare($insertstickermobile);
+                        $stmtstickermobileinsert->bindParam(1, $mobile_id, PDO::PARAM_STR);
+                        $stmtstickermobileinsert->bindValue(2, $stickerTypeValue, PDO::PARAM_STR);
+                        $stmtstickermobileinsert->execute();
+                        $stmtmobileinsert->closeCursor();
+                    }
+
+                    if (isset($imeiNumberValue) && !empty($imeiNumberValue)) {
+                        $insertimeimobile = "INSERT INTO imei_settings (mobile_id, imeiNumber) VALUES (?, ?)";
+                        $stmtimeimobileinsert = $pdo->prepare($insertimeimobile);
+                        $stmtimeimobileinsert->bindParam(1, $mobile_id, PDO::PARAM_STR);
+                        $stmtimeimobileinsert->bindValue(2, $imeiNumberValue, PDO::PARAM_STR);
+                        $stmtimeimobileinsert->execute();
+                        $stmtmobileinsert->closeCursor();
+                    }
                 }
             }
-            global $mobileIdArrays;
-            $mobileIdArrays = $mobileIdArray;
-            //mobile settings
-            $insertmobilesettings = "INSERT INTO mobile_settings (id_mobileList, tagDetails, stickerType, imeiNumber) VALUES (?, ?, ?, ?)";
-            $stmtmobilesettingsinsert = $pdo->prepare($insertmobilesettings);
-            $tagDetails = $data["tagDetails"];
-            $stickerType = $data["stickerType"];
-            $imeiNumber = $data["imeiNumber"];
-            for ($i = 0; $i < count($mobileIdArrays); $i++) {
-                $mobileIdArraysValue = isset($mobileIdArrays[$i]) ? $mobileIdArrays[$i] : "";
-                $tagDetailsValue = isset($tagDetails[$i]) ? $tagDetails[$i] : "";
-                $stickerTypeValue = isset($stickerType[$i]) ? $stickerType[$i] : "";
-                $imeiNumberValue = isset($imeiNumber[$i]) ? $imeiNumber[$i] : "";
-                if (!empty($mobileIdArrays[$i]) && $mobileIdArrays != 'None') {
-                   
-                
-                    $stmtmobilesettingsinsert->bindParam(1, $mobileIdArraysValue, PDO::PARAM_STR);
-                    $stmtmobilesettingsinsert->bindValue(2, $tagDetailsValue, PDO::PARAM_STR);
-                    $stmtmobilesettingsinsert->bindValue(3, $stickerTypeValue, PDO::PARAM_STR);
-                    $stmtmobilesettingsinsert->bindValue(4, $imeiNumberValue, PDO::PARAM_STR);
-                    $stmtmobilesettingsinsert->execute();
-                    $stmtmobilesettingsinsert->closeCursor();
 
-                    
-                }
-            }
-            for ($i = 0; $i < count($mobileIdArrays); $i++) {
-                $mobileIdArraysValue = isset($mobileIdArrays[$i]) ? $mobileIdArrays[$i] : "";
-
-                // Mobile Validation
-                $mobileStatusUpdate = '';
-
-                $mobileValidationQuery = $pdo->prepare("SELECT * FROM mobile_validation WHERE id_mobileList = ?");
-                $mobileValidationQuery->execute([$mobileIdArraysValue]); // Execute with an array
-                $mobile_validation = $mobileValidationQuery->fetch();
-                if ($mobile_validation !== false) {
-                if (($mobile_validation["moised"] == 'Gur' || $mobile_validation["moised"] == 'Mivtzar' || $mobile_validation["moised"] == 'Beis Chinuch') && $mobile_validation["mobileUser"] == 'Mother' && $mobile_validation["mobileDevice"] == 'Smartphone') {
-                    $mobileStatusUpdate = 'Invalid';
-                } else if (($mobile_validation["moised"] == 'Gur' || $mobile_validation["moised"] == 'Mivtzar') &&
-                    $mobile_validation["mobileUser"] == 'Father' && $mobile_validation["mobileDevice"] == 'Smartphone'
-                ) {
-                    $mobileStatusUpdate = 'Invalid';
-                } else if ($mobile_validation["tagStatus"] == 'Invalid' || $mobile_validation["stickerStatus"] == 'Invalid' || $mobile_validation["imeiStatus"] == 'Invalid') {
-                    $mobileStatusUpdate = 'Invalid';
-                } else {
-                    $mobileStatusUpdate = 'Valid';
-                }
-
-                // Update mobile_list with the calculated status
-                $updateMobileStatusQuery = $pdo->prepare("UPDATE mobile_list SET mobileStatus = ? WHERE id_mobileList = ?");
-                $updateMobileStatusQuery->execute([$mobileStatusUpdate, $mobileIdArraysValue]);
-            }
-            }
-
-            $MobileUpdate = "UPDATE mobile_list SET mobileStatus = :mobileStatusUpdate WHERE id_mobileList = :mobileIdValue";
-            $stmt = $pdo->prepare($MobileUpdate);
-            $stmt->bindParam(':mobileStatusUpdate', $mobileStatusUpdate, PDO::PARAM_STR);
-            $stmt->bindParam(':mobileIdValue', $mobileIdArraysValue, PDO::PARAM_INT);
-            $stmt->execute();
-
-            $primaryUser = $data["primaryUser"];
-            $deviceCategory = $data["deviceCategory"];
-            $filterName = $data["filterName"];
-            $filterType = $data["filterType"];
-            $attachedEmail = $data["attachedEmail"];
-            $filterPolicy = $data["filterPolicy"];
-            $filterAdditionalInformation = $data["filterAdditionalInformation"];
-            $whatsappSettings = $data["whatsappSettings"];
-            $appsAndUrlInformation = $data["appsAndUrlInformation"];
-            for ($i = 0; $i < count($primaryUser); $i++) {
-                $primaryUserValue = isset($primaryUser[$i]) ? $primaryUser[$i] : "";
-                $filterTypeValue = isset($filterType[$i]) ? $filterType[$i] : "";
-            }
-
+            $ProcessUnvalidatedTags = 'ProcessUnvalidatedTags';
+            $tagInvalidstmt = $pdo->prepare("CALL $ProcessUnvalidatedTags()");
+            $tagInvalidstmt->execute();
+            $ProcessValidTags = 'ProcessValidTags';
+            $tagValidstmt = $pdo->prepare("CALL $ProcessValidTags()");
+            $tagValidstmt->execute();
+            $ProcessUnvalidatedsticker = 'ProcessUnvalidatedsticker';
+            $stickerInvalidstmt = $pdo->prepare("CALL $ProcessUnvalidatedsticker()");
+            $stickerInvalidstmt->execute();
+            $ProcessValidstickers = 'ProcessValidstickers';
+            $stickerValidstmt = $pdo->prepare("CALL $ProcessValidstickers()");
+            $stickerValidstmt->execute();
+            $ProcessUnvalidatedMobileDevices = 'ProcessUnvalidatedMobileDevices';
+            $mobileDevInvalidstmt = $pdo->prepare("CALL $ProcessUnvalidatedMobileDevices()");
+            $mobileDevInvalidstmt->execute();
+            $ProcessValidMobileDevice = 'ProcessValidMobileDevice';
+            $mobileDevValidstmt = $pdo->prepare("CALL $ProcessValidMobileDevice()");
+            $mobileDevValidstmt->execute();
 
 
             $response = array('status' => 'success', 'destination' => 'home.html');
             echo json_encode($response);
-        } else {
-            $response = array('status' => 'Fail', 'destination' => $errors);
-            echo json_encode($response);
         }
-        
+
+    } else {
+        $user_ids = htmlspecialchars($data["user_id"]);
+        $response = array('status' => 'success', 'destination' => 'home.html');
+        echo json_encode($response);
     }
+
 }

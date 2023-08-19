@@ -31,13 +31,13 @@ while ($maindevices = $maindevstmts->fetch(PDO::FETCH_ASSOC)) {
         <?php } ?>
 
         <?php
-    $whatstmts = $pdo->prepare("SELECT * FROM whatsapp_settings WHERE mainDevice_id = '" . $maindevices["mainDevice_id"] . "'");
+        $whatstmts = $pdo->prepare("SELECT * FROM whatsapp_settings WHERE mainDevice_id = '" . $maindevices["mainDevice_id"] . "'");
         $whatstmts->execute();
-    $whatsAppSettings = $whatstmts->fetch(PDO::FETCH_ASSOC);
+        $whatsAppSettings = $whatstmts->fetch(PDO::FETCH_ASSOC);
         if (isset($whatsAppSettings["whatsappDetail"])) { ?>
             <p><span class="text-secondary">Other information:</span>
                 <?= htmlspecialchars($whatsAppSettings["whatsappDetail"]) ?>
-                 
+
             </p>
         <?php } ?>
     </div>

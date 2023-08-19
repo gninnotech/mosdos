@@ -2,7 +2,7 @@
 include '../../database/dbConnection.php';
 $sk = $_REQUEST["sk"];
 $kehillaidoption = '';
-if($sk == 'Ezreini Stamford Hill'){
+if ($sk == 'Ezreini Stamford Hill') {
     $kehillaidoption = 1;
 } else if ($sk == 'Mivtzar') {
     $kehillaidoption = 2;
@@ -20,8 +20,7 @@ if($sk == 'Ezreini Stamford Hill'){
     $kehillaidoption = 8;
 } else if ($sk == 'Mishmeres-Satmar') {
     $kehillaidoption = 9;
-}else{
-
+} else {
 }
 $institutionstmtops = $pdo->prepare("SELECT * FROM institution_form WHERE moisedList = '" . $sk . "'");
 $institutionstmtops->execute();
@@ -44,7 +43,7 @@ $label = $synagoglabel["synagogueHeader"];
 $otherselectprimary = '<option value="">Select</option>';
 array_push($synagogarray, $otherselectprimary);
 while ($synagogoptions = $synagogstmtops->fetch(PDO::FETCH_ASSOC)) {
-        $synagogcontent = '<option value="' . $synagogoptions["synagogueDetails"] . '">' . $synagogoptions["synagogueDetails"] . '</option>';
+    $synagogcontent = '<option value="' . $synagogoptions["synagogueDetails"] . '">' . $synagogoptions["synagogueDetails"] . '</option>';
 
     array_push($synagogarray, $synagogcontent);
 }
@@ -55,4 +54,3 @@ $response = array('institution' => $institutionses, 'synagoglabel' => $label, 's
 
 // Encode the PHP array as JSON before echoing
 echo json_encode($response);
-

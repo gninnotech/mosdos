@@ -506,13 +506,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $whatsAppStatusUpdate = 'whatsAppStatusUpdate';
             $whatsAppReview = $pdo->prepare("CALL $whatsAppStatusUpdate()");
             $whatsAppReview->execute();
+            $UpdateApplicationStatus = 'UpdateApplicationStatus';
+            $UpdateApplicationStatusstmts = $pdo->prepare("CALL $UpdateApplicationStatus()");
+            $UpdateApplicationStatusstmts->execute();
+            $UpdateUnderReviewStatus = 'UpdateUnderReviewStatus';
+            $UpdateUnderReviewStatusstmts = $pdo->prepare("CALL $UpdateUnderReviewStatus()");
+            $UpdateUnderReviewStatusstmts->execute();
+
+
+
+
 
             $moisedValue = $data["moised"];
             $destinedroute = '';
             if ($moisedValue == 'Ezreini Stamford Hill' || $moisedValue == 'Mishmeres-Satmar' || $moisedValue == 'Gur' || $moisedValue == 'Venishmartem (Belz 99)' || $moisedValue == 'Westcliff' || $moisedValue == 'Beis Chinuch') {
                 $destinedroute = '../checkout.html?appid=' . $application_id;
             } else {
-                $destinedroute = 'home.html';
+                $destinedroute = '../../pages/email_source/email_automation.php?application_id=' . $application_id;
             }
 
             $response = array('status' => 'success', 'destination' => $destinedroute);

@@ -64,7 +64,7 @@ if (isset($_GET["application_id"])) {
     $stickerValue = implode('', $stickerGlobal);
 
     $mobileHeader = '';
-    if (!empty($tagvalue) || !empty($stickerValue)) {
+    if (!empty($tagGlobal) || !empty($stickerGlobal)) {
         $mobileHeader = '<div class="fs-5 pt-3 pb-3 mb-3" style="background-color:rgb(0, 143, 219);color:white;text-align:center;">Basic Mobile Device</div>';
     }
 
@@ -81,9 +81,22 @@ if (isset($_GET["application_id"])) {
     $replaceGlobal = $replaceNotificationArray;
     $replaceValue = implode('', $replaceGlobal);
 
+    $mainNotificationArray = array();
+    $main_notif = $pdo->prepare("SELECT * FROM main_device_notification WHERE application_id = ?");
+    $main_notif->execute([$application_id]);
+    while ($main_notification = $main_notif->fetch(PDO::FETCH_ASSOC)) {
+        if (isset($main_notification["notification"]) && !empty($main_notification["notification"])) {
+            $mainNotificationPush = '<p>' . $main_notification["notification"] . '</p><hr>';
+            array_push($mainNotificationArray, $mainNotificationPush);
+        }
+    }
+    global $mainGlobal;
+    $mainGlobal = $mainNotificationArray;
+    $mainValue = implode('', $mainGlobal);
+
 
     $mainHeader = '';
-    if (!empty($replaceValue)) {
+    if (!empty($replaceGlobal) || !empty($mainGlobal)) {
         $mainHeader = '<div class="fs-5 pt-3 pb-3 mb-3" style="background-color:rgb(0, 143, 219);color:white;text-align:center;">Main Device</div>';
     }
 
@@ -150,6 +163,7 @@ if (isset($_GET["application_id"])) {
             ' . $stickerValue . '
             ' . $mainHeader . '
             ' . $replaceValue . '
+            ' . $mainValue . '
         </div>
         <br><br>
         <p>Office Hours:</p>
